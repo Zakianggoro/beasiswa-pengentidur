@@ -1,103 +1,228 @@
-import Image from "next/image";
+import React from 'react';
+import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign } from 'lucide-react';
 
-export default function Home() {
+export default function ScholarshipFinder() {
+  const featuredScholarships = [
+    {
+      title: "Beasiswa Unggulan Kemendikbud 2025",
+      provider: "Kementerian Pendidikan",
+      deadline: "31 Desember 2025",
+      amount: "Full Tuition + Living Cost",
+      location: "Indonesia",
+      color: "from-orange-400 to-red-500"
+    },
+    {
+      title: "LPDP Scholarship Program",
+      provider: "LPDP Indonesia",
+      deadline: "15 Januari 2026",
+      amount: "Full Funded",
+      location: "Global",
+      color: "from-blue-500 to-blue-700"
+    },
+    {
+      title: "Chevening Scholarship UK",
+      provider: "UK Government",
+      deadline: "8 November 2025",
+      amount: "£18,000/year",
+      location: "United Kingdom",
+      color: "from-purple-500 to-indigo-600"
+    }
+  ];
+
+  const categories = [
+    { name: "S1 / Sarjana", icon: BookOpen, count: 127, color: "bg-blue-500" },
+    { name: "S2 / Master", icon: GraduationCap, count: 89, color: "bg-purple-500" },
+    { name: "S3 / Doktor", icon: TrendingUp, count: 45, color: "bg-orange-500" },
+    { name: "Short Course", icon: Calendar, count: 63, color: "bg-green-500" }
+  ];
+
+  const recommendations = [
+    {
+      title: "Tips Menulis Essay Beasiswa",
+      desc: "Panduan lengkap menulis essay yang menarik",
+      image: "📝",
+      color: "bg-gradient-to-br from-yellow-400 to-orange-500"
+    },
+    {
+      title: "Cara Memilih Beasiswa yang Tepat",
+      desc: "Strategi memilih beasiswa sesuai profil Anda",
+      image: "🎯",
+      color: "bg-gradient-to-br from-blue-400 to-blue-600"
+    },
+    {
+      title: "Persiapan Interview Beasiswa",
+      desc: "Tips sukses menghadapi interview beasiswa",
+      image: "💼",
+      color: "bg-gradient-to-br from-purple-400 to-pink-500"
+    },
+    {
+      title: "Dokumen Beasiswa Lengkap",
+      desc: "Checklist dokumen yang perlu disiapkan",
+      image: "📋",
+      color: "bg-gradient-to-br from-green-400 to-teal-500"
+    }
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white border-r border-gray-200 p-6 fixed h-full">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <GraduationCap className="w-6 h-6 text-white" />
+          </div>
+          <span className="font-bold text-xl text-gray-800">BeasiswaKu</span>
+        </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+        <nav className="space-y-2">
+          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+            <BookOpen className="w-5 h-5" />
+            Beranda
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <Search className="w-5 h-5" />
+            Cari Beasiswa
           </a>
+          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <Bell className="w-5 h-5" />
+            Notifikasi
+          </a>
+          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <Calendar className="w-5 h-5" />
+            Deadline
+          </a>
+          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <User className="w-5 h-5" />
+            Profil Saya
+          </a>
+        </nav>
+
+        <div className="absolute bottom-6 left-6 right-6">
+          <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-4 text-white">
+            <p className="text-sm font-semibold mb-1">💡 Tips Hari Ini</p>
+            <p className="text-xs opacity-90">Mulai persiapan dokumen beasiswa dari sekarang!</p>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="ml-64 flex-1 p-8">
+        {/* Header */}
+        <header className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Temukan Beasiswa Impianmu</h1>
+            <p className="text-gray-600 mt-1">Jelajahi ribuan peluang beasiswa untuk masa depan cerah</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Cari beasiswa..."
+                className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
+            </div>
+            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+              <Bell className="w-6 h-6 text-gray-600" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <User className="w-5 h-5 text-white" />
+              </div>
+            </button>
+          </div>
+        </header>
+
+        {/* Hero Banner */}
+        <div className="bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-3">Cari Beasiswa Sesuai Profil Anda</h2>
+            <p className="text-blue-100 mb-6 max-w-2xl">
+              Gunakan sistem rekomendasi cerdas kami untuk menemukan beasiswa yang paling sesuai dengan latar belakang dan tujuan pendidikan Anda
+            </p>
+            <div className="flex gap-3">
+              <button className="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition">
+                Mulai Pencarian
+              </button>
+              <button className="px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition">
+                Lihat Panduan
+              </button>
+            </div>
+          </div>
+          <div className="absolute right-0 top-0 opacity-20">
+            <GraduationCap className="w-64 h-64" />
+          </div>
+        </div>
+
+        {/* Categories */}
+        <div className="mb-8">
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Kategori Beasiswa</h3>
+          <div className="grid grid-cols-4 gap-4">
+            {categories.map((cat, idx) => (
+              <div key={idx} className="bg-white rounded-xl p-6 hover:shadow-lg transition cursor-pointer border border-gray-200">
+                <div className={`w-12 h-12 ${cat.color} rounded-lg flex items-center justify-center mb-4`}>
+                  <cat.icon className="w-6 h-6 text-white" />
+                </div>
+                <h4 className="font-semibold text-gray-800 mb-1">{cat.name}</h4>
+                <p className="text-sm text-gray-500">{cat.count} Beasiswa</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured Scholarships */}
+        <div className="mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold text-gray-800">Beasiswa Unggulan</h3>
+            <a href="#" className="text-blue-600 font-semibold hover:text-blue-700">Lihat Semua →</a>
+          </div>
+          <div className="grid grid-cols-3 gap-6">
+            {featuredScholarships.map((scholarship, idx) => (
+              <div key={idx} className="bg-white rounded-xl overflow-hidden hover:shadow-xl transition border border-gray-200">
+                <div className={`h-32 bg-gradient-to-r ${scholarship.color} p-6 flex items-center justify-center`}>
+                  <GraduationCap className="w-16 h-16 text-white opacity-80" />
+                </div>
+                <div className="p-6">
+                  <h4 className="font-bold text-lg text-gray-800 mb-2">{scholarship.title}</h4>
+                  <p className="text-sm text-gray-600 mb-4">{scholarship.provider}</p>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Calendar className="w-4 h-4" />
+                      <span>Deadline: {scholarship.deadline}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <DollarSign className="w-4 h-4" />
+                      <span>{scholarship.amount}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <MapPin className="w-4 h-4" />
+                      <span>{scholarship.location}</span>
+                    </div>
+                  </div>
+                  <button className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Lihat Detail
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recommendations */}
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Artikel & Panduan</h3>
+          <div className="grid grid-cols-4 gap-4">
+            {recommendations.map((rec, idx) => (
+              <div key={idx} className={`${rec.color} rounded-xl p-6 text-white hover:scale-105 transition cursor-pointer`}>
+                <div className="text-4xl mb-3">{rec.image}</div>
+                <h4 className="font-bold mb-2">{rec.title}</h4>
+                <p className="text-sm opacity-90">{rec.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
