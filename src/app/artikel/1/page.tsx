@@ -46,7 +46,7 @@ export default function ArtikelReadPage() {
             <Search className="w-5 h-5" />
             Cari Beasiswa
           </Link>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <Bell className="w-5 h-5" />
             Artikel
           </a>
