@@ -203,8 +203,6 @@ export default function ArtikelReadPage() {
                         </div>
                       </div>
                     </div>
-
-                    {/* Tip 5 */}
                     <div>
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -336,35 +334,17 @@ export default function ArtikelReadPage() {
                   <div className="bg-white rounded-xl p-6 border border-gray-200">
                     <h3 className="font-bold text-gray-800 mb-4">Daftar Isi</h3>
                     <nav className="space-y-2">
-                      <a href="#" className="block text-sm text-blue-600 hover:text-blue-700">1. Pahami Pertanyaan dengan Benar</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">2. Buat Opening yang Kuat</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">3. Ceritakan Kisah yang Autentik</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">4. Tunjukkan, Jangan Hanya Memberitahu</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">5. Hubungkan dengan Tujuan Beasiswa</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">6. Fokus pada Dampak dan Kontribusi</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">7. Perhatikan Struktur dan Flow</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">8. Gunakan Bahasa yang Jelas</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">9. Edit, Edit, dan Edit Lagi</a>
-                      <a href="#" className="block text-sm text-gray-600 hover:text-blue-600">10. Tutup dengan Impact</a>
+                      <p className="block text-sm text-gray-600">1. Pahami Pertanyaan dengan Benar</p>
+                      <p className="block text-sm text-gray-600">2. Buat Opening yang Kuat</p>
+                      <p className="block text-sm text-gray-600">3. Ceritakan Kisah yang Autentik</p>
+                      <p className="block text-sm text-gray-600">4. Tunjukkan, Jangan Hanya Memberitahu</p>
+                      <p className="block text-sm text-gray-600">5. Hubungkan dengan Tujuan Beasiswa</p>
+                      <p className="block text-sm text-gray-600">6. Fokus pada Dampak dan Kontribusi</p>
+                      <p className="block text-sm text-gray-600">7. Perhatikan Struktur dan Flow</p>
+                      <p className="block text-sm text-gray-600">8. Gunakan Bahasa yang Jelas</p>
+                      <p className="block text-sm text-gray-600">9. Edit, Edit, dan Edit Lagi</p>
+                      <p className="block text-sm text-gray-600">10. Tutup dengan Impact</p>
                     </nav>
-                  </div>
-
-                  {/* Related Articles */}
-                  <div className="bg-white rounded-xl p-6 border border-gray-200">
-                    <h3 className="font-bold text-gray-800 mb-4">Artikel Terkait</h3>
-                    <div className="space-y-4">
-                      {relatedArticles.map(article => (
-                        <div key={article.id} className="flex gap-3 pb-4 border-b border-gray-200 last:border-0 last:pb-0 cursor-pointer group">
-                          <div className="text-3xl">{article.image}</div>
-                          <div className="flex-1">
-                            <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition mb-1">
-                              {article.title}
-                            </h4>
-                            <p className="text-xs text-gray-500">{article.readTime}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>

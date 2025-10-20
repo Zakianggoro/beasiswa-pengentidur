@@ -18,6 +18,7 @@ export default function ArtikelPage() {
       readTime: "8 menit",
       date: "15 Oktober 2025",
       image: "📝",
+      imageUrl: "/components/placeholder/image1.jpg",
       color: "from-yellow-400 to-orange-500"
     },
     {
@@ -28,6 +29,7 @@ export default function ArtikelPage() {
       readTime: "10 menit",
       date: "12 Oktober 2025",
       image: "💼",
+      imageUrl: "/images/interview-preparation.jpg",
       color: "from-purple-400 to-pink-500"
     },
     {
@@ -38,6 +40,7 @@ export default function ArtikelPage() {
       readTime: "6 menit",
       date: "10 Oktober 2025",
       image: "📋",
+      imageUrl: "/images/documents-checklist.jpg",
       color: "from-green-400 to-teal-500"
     },
     {
@@ -48,6 +51,7 @@ export default function ArtikelPage() {
       readTime: "7 menit",
       date: "8 Oktober 2025",
       image: "🎯",
+      imageUrl: "/images/scholarship-strategy.jpg",
       color: "from-blue-400 to-blue-600"
     },
     {
@@ -58,6 +62,7 @@ export default function ArtikelPage() {
       readTime: "9 menit",
       date: "5 Oktober 2025",
       image: "✍️",
+      imageUrl: "/images/motivation-letter.jpg",
       color: "from-indigo-400 to-purple-600"
     },
     {
@@ -68,6 +73,7 @@ export default function ArtikelPage() {
       readTime: "7 menit",
       date: "3 Oktober 2025",
       image: "📨",
+      imageUrl: "/images/recommendation-letter.jpg",
       color: "from-pink-400 to-red-500"
     },
     {
@@ -78,6 +84,7 @@ export default function ArtikelPage() {
       readTime: "5 menit",
       date: "1 Oktober 2025",
       image: "⚠️",
+      imageUrl: "/images/common-mistakes.jpg",
       color: "from-red-400 to-orange-500"
     },
     {
@@ -88,6 +95,7 @@ export default function ArtikelPage() {
       readTime: "8 menit",
       date: "28 September 2025",
       image: "🏆",
+      imageUrl: "/images/track-record.jpg",
       color: "from-yellow-500 to-amber-600"
     }
   ];
@@ -149,38 +157,43 @@ export default function ArtikelPage() {
         </div>
 
         {/* Featured Article */}
-        <div className={`bg-gradient-to-r ${featuredArticle.color} rounded-2xl p-8 mb-8 text-white relative overflow-hidden`}>
-          <div className="absolute top-4 right-4">
-            <span className="px-3 py-1 bg-white text-gray-800 text-xs font-semibold rounded-full">
-              ⭐ Artikel Unggulan
-            </span>
-          </div>
-          <div className="relative z-10 max-w-3xl">
-            <div className="flex items-center gap-2 mb-3">
-              <Tag className="w-4 h-4" />
-              <span className="text-sm font-semibold">{featuredArticle.category}</span>
-            </div>
-            <h2 className="text-3xl font-bold mb-3">{featuredArticle.title}</h2>
-            <p className="text-white/90 mb-6 text-lg">
-              {featuredArticle.excerpt}
-            </p>
-            <div className="flex items-center gap-6 mb-6">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm">{featuredArticle.readTime} baca</span>
+        <div className="relative rounded-2xl overflow-hidden mb-8 h-96">
+          <img 
+            src={featuredArticle.imageUrl} 
+            alt={featuredArticle.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+          <div className="absolute inset-0 p-8 flex items-center">
+            <div className="relative z-10 max-w-3xl text-white">
+              <div className="absolute top-0 right-0">
+                <span className="px-3 py-1 bg-white text-gray-800 text-xs font-semibold rounded-full">
+                  ⭐ Artikel Unggulan
+                </span>
               </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm">{featuredArticle.date}</span>
+              <div className="flex items-center gap-2 mb-3">
+                <Tag className="w-4 h-4" />
+                <span className="text-sm font-semibold">{featuredArticle.category}</span>
               </div>
+              <h2 className="text-3xl font-bold mb-3">{featuredArticle.title}</h2>
+              <p className="text-white/90 mb-6 text-lg">
+                {featuredArticle.excerpt}
+              </p>
+              <div className="flex items-center gap-6 mb-6">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm">{featuredArticle.readTime} baca</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span className="text-sm">{featuredArticle.date}</span>
+                </div>
+              </div>
+              <Link href={`/artikel/${featuredArticle.id}`} className="px-6 py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 inline-flex">
+                Baca Artikel
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <Link href={`/artikel/${featuredArticle.id}`} className="px-6 py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 inline-flex">
-              Baca Artikel
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="absolute right-0 bottom-0 opacity-20 text-8xl">
-            {featuredArticle.image}
           </div>
         </div>
 
@@ -275,14 +288,23 @@ export default function ArtikelPage() {
                     <span>{article.date}</span>
                   </div>
                 </div>
-                <button className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                <Link href={`/artikel/${article.id}`} className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2">
                   Baca Selengkapnya
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {filteredArticles.length > 6 && (
+          <div className="mt-8 text-center">
+            <button className="px-8 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition">
+              Muat Lebih Banyak Artikel
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
