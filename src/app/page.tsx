@@ -1,7 +1,11 @@
-import React from 'react';
-import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign } from 'lucide-react';
+// app/page.tsx
+'use client';
 
-export default function ScholarshipFinder() {
+import React, { useState } from 'react';
+import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign } from 'lucide-react';
+import Link from 'next/link';
+
+export default function Dashboard() {
   const featuredScholarships = [
     {
       title: "Beasiswa Unggulan Kemendikbud 2025",
@@ -33,7 +37,6 @@ export default function ScholarshipFinder() {
     { name: "S1 / Sarjana", icon: BookOpen, count: 127, color: "bg-blue-500" },
     { name: "S2 / Master", icon: GraduationCap, count: 89, color: "bg-purple-500" },
     { name: "S3 / Doktor", icon: TrendingUp, count: 45, color: "bg-orange-500" },
-    { name: "Short Course", icon: Calendar, count: 63, color: "bg-green-500" }
   ];
 
   const recommendations = [
@@ -75,25 +78,25 @@ export default function ScholarshipFinder() {
         </div>
 
         <nav className="space-y-2">
-          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <BookOpen className="w-5 h-5" />
             Beranda
-          </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Bell className="w-5 h-5" />
-            Notifikasi
+            Artikel
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
           </a>
           <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
-            Profil Saya
+            Beasiswa Bot (BEBOT)
           </a>
         </nav>
 
@@ -107,7 +110,6 @@ export default function ScholarshipFinder() {
 
       {/* Main Content */}
       <main className="ml-64 flex-1 p-8">
-        {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Temukan Beasiswa Impianmu</h1>
@@ -142,9 +144,12 @@ export default function ScholarshipFinder() {
               Gunakan sistem rekomendasi cerdas kami untuk menemukan beasiswa yang paling sesuai dengan latar belakang dan tujuan pendidikan Anda
             </p>
             <div className="flex gap-3">
-              <button className="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition">
+              <Link 
+                href="/cari-beasiswa"
+                className="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition inline-block"
+              >
                 Mulai Pencarian
-              </button>
+              </Link>
               <button className="px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition">
                 Lihat Panduan
               </button>
@@ -175,7 +180,9 @@ export default function ScholarshipFinder() {
         <div className="mb-8">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-bold text-gray-800">Beasiswa Unggulan</h3>
-            <a href="#" className="text-blue-600 font-semibold hover:text-blue-700">Lihat Semua →</a>
+            <Link href="/cari-beasiswa" className="text-blue-600 font-semibold hover:text-blue-700">
+              Lihat Semua →
+            </Link>
           </div>
           <div className="grid grid-cols-3 gap-6">
             {featuredScholarships.map((scholarship, idx) => (
@@ -211,7 +218,7 @@ export default function ScholarshipFinder() {
 
         {/* Recommendations */}
         <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Artikel & Panduan</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Tips & Trick</h3>
           <div className="grid grid-cols-4 gap-4">
             {recommendations.map((rec, idx) => (
               <div key={idx} className={`${rec.color} rounded-xl p-6 text-white hover:scale-105 transition cursor-pointer`}>
