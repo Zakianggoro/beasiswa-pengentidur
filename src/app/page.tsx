@@ -2,12 +2,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign } from 'lucide-react';
+import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign, Home, NotebookText } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Dashboard() {
   const featuredScholarships = [
     {
+      id: 1,
       title: "Beasiswa Unggulan Kemendikbud 2025",
       provider: "Kementerian Pendidikan",
       deadline: "31 Desember 2025",
@@ -15,22 +16,24 @@ export default function Dashboard() {
       location: "Indonesia",
       color: "from-orange-400 to-red-500"
     },
-    {
-      title: "LPDP Scholarship Program",
-      provider: "LPDP Indonesia",
-      deadline: "15 Januari 2026",
-      amount: "Full Funded",
-      location: "Global",
-      color: "from-blue-500 to-blue-700"
-    },
-    {
-      title: "Chevening Scholarship UK",
-      provider: "UK Government",
-      deadline: "8 November 2025",
-      amount: "£18,000/year",
-      location: "United Kingdom",
-      color: "from-purple-500 to-indigo-600"
-    }
+    // {
+    //   id: 2,
+    //   title: "LPDP Scholarship Program",
+    //   provider: "LPDP Indonesia",
+    //   deadline: "15 Januari 2026",
+    //   amount: "Full Funded",
+    //   location: "Global",
+    //   color: "from-blue-500 to-blue-700"
+    // },
+    // {
+    //   id: 3,
+    //   title: "Chevening Scholarship UK",
+    //   provider: "UK Government",
+    //   deadline: "8 November 2025",
+    //   amount: "£18,000/year",
+    //   location: "United Kingdom",
+    //   color: "from-purple-500 to-indigo-600"
+    // }
   ];
 
   const categories = [
@@ -78,23 +81,23 @@ export default function Dashboard() {
         </div>
 
         <nav className="space-y-2">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
-            <BookOpen className="w-5 h-5" />
+          <a href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+            <Home className="w-5 h-5" />
             Beranda
-          </Link>
-          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </a>
+          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </Link>
+          </a>
           <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <Bell className="w-5 h-5" />
+            <NotebookText className="w-5 h-5" />
             Artikel
           </a>
           <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
           </a>
@@ -124,24 +127,15 @@ export default function Dashboard() {
               />
               <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
             </div>
-            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
-              <Bell className="w-6 h-6 text-gray-600" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-            <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
-              </div>
-            </button>
           </div>
         </header>
 
         {/* Hero Banner */}
         <div className="bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-3">Cari Beasiswa Sesuai Profil Anda</h2>
+            <h2 className="text-3xl font-bold mb-3">Cari Beasiswa Anda</h2>
             <p className="text-blue-100 mb-6 max-w-2xl">
-              Gunakan sistem rekomendasi cerdas kami untuk menemukan beasiswa yang paling sesuai dengan latar belakang dan tujuan pendidikan Anda
+              Carilah beasiswa favorit mu, kami bantu kamu wudjudkan impian mu. Mari cari beasiswa mu dan tanya chat bot kami.
             </p>
             <div className="flex gap-3">
               <Link 
@@ -150,9 +144,6 @@ export default function Dashboard() {
               >
                 Mulai Pencarian
               </Link>
-              <button className="px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition">
-                Lihat Panduan
-              </button>
             </div>
           </div>
           <div className="absolute right-0 top-0 opacity-20">
@@ -207,9 +198,12 @@ export default function Dashboard() {
                       <span>{scholarship.location}</span>
                     </div>
                   </div>
-                  <button className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">
+                  <Link
+                    href={`/recommendation/${scholarship.id}`}
+                    className="block w-full py-2 bg-blue-600 text-white rounded-lg font-semibold text-center hover:bg-blue-700 transition"
+                  >
                     Lihat Detail
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

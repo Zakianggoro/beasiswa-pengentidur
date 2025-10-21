@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowRight, Tag, TrendingUp } from 'lucide-react';
+import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ArtikelPage() {
@@ -29,7 +29,7 @@ export default function ArtikelPage() {
       readTime: "10 menit",
       date: "12 Oktober 2025",
       image: "💼",
-      imageUrl: "/images/interview-preparation.jpg",
+      imageUrl: "/components/placeholder/image2.jpg",
       color: "from-purple-400 to-pink-500"
     },
     {
@@ -40,64 +40,64 @@ export default function ArtikelPage() {
       readTime: "6 menit",
       date: "10 Oktober 2025",
       image: "📋",
-      imageUrl: "/images/documents-checklist.jpg",
+      imageUrl: "/components/placeholder/image3.jpg",
       color: "from-green-400 to-teal-500"
     },
-    {
-      id: 4,
-      title: "Strategi Memilih Beasiswa yang Tepat Sesuai Profil Anda",
-      excerpt: "Tidak semua beasiswa cocok untuk semua orang. Pelajari cara menganalisis profil Anda dan memilih beasiswa yang paling sesuai untuk meningkatkan peluang sukses.",
-      category: "Strategi",
-      readTime: "7 menit",
-      date: "8 Oktober 2025",
-      image: "🎯",
-      imageUrl: "/images/scholarship-strategy.jpg",
-      color: "from-blue-400 to-blue-600"
-    },
-    {
-      id: 5,
-      title: "Motivation Letter vs Personal Statement: Apa Bedanya dan Bagaimana Menulisnya",
-      excerpt: "Banyak yang bingung membedakan motivation letter dan personal statement. Artikel ini menjelaskan perbedaan keduanya dan tips menulis masing-masing dengan efektif.",
-      category: "Tips Essay",
-      readTime: "9 menit",
-      date: "5 Oktober 2025",
-      image: "✍️",
-      imageUrl: "/images/motivation-letter.jpg",
-      color: "from-indigo-400 to-purple-600"
-    },
-    {
-      id: 6,
-      title: "Cara Mendapatkan Surat Rekomendasi yang Kuat untuk Beasiswa",
-      excerpt: "Surat rekomendasi yang baik bisa menjadi game-changer dalam aplikasi beasiswa Anda. Pelajari cara memilih pemberi rekomendasi yang tepat dan tips meminta surat rekomendasi.",
-      category: "Dokumen",
-      readTime: "7 menit",
-      date: "3 Oktober 2025",
-      image: "📨",
-      imageUrl: "/images/recommendation-letter.jpg",
-      color: "from-pink-400 to-red-500"
-    },
-    {
-      id: 7,
-      title: "5 Kesalahan Fatal yang Harus Dihindari Saat Apply Beasiswa",
-      excerpt: "Hindari kesalahan umum yang sering membuat aplikasi beasiswa ditolak. Dari deadline hingga format dokumen, pelajari apa saja yang harus dihindari.",
-      category: "Strategi",
-      readTime: "5 menit",
-      date: "1 Oktober 2025",
-      image: "⚠️",
-      imageUrl: "/images/common-mistakes.jpg",
-      color: "from-red-400 to-orange-500"
-    },
-    {
-      id: 8,
-      title: "Membangun Track Record untuk Memperkuat Aplikasi Beasiswa",
-      excerpt: "Track record yang solid adalah aset berharga dalam aplikasi beasiswa. Temukan cara membangun prestasi akademik dan non-akademik yang relevan.",
-      category: "Motivasi",
-      readTime: "8 menit",
-      date: "28 September 2025",
-      image: "🏆",
-      imageUrl: "/images/track-record.jpg",
-      color: "from-yellow-500 to-amber-600"
-    }
+    // {
+    //   id: 4,
+    //   title: "Strategi Memilih Beasiswa yang Tepat Sesuai Profil Anda",
+    //   excerpt: "Tidak semua beasiswa cocok untuk semua orang. Pelajari cara menganalisis profil Anda dan memilih beasiswa yang paling sesuai untuk meningkatkan peluang sukses.",
+    //   category: "Strategi",
+    //   readTime: "7 menit",
+    //   date: "8 Oktober 2025",
+    //   image: "🎯",
+    //   imageUrl: "/images/scholarship-strategy.jpg",
+    //   color: "from-blue-400 to-blue-600"
+    // },
+    // {
+    //   id: 5,
+    //   title: "Motivation Letter vs Personal Statement: Apa Bedanya dan Bagaimana Menulisnya",
+    //   excerpt: "Banyak yang bingung membedakan motivation letter dan personal statement. Artikel ini menjelaskan perbedaan keduanya dan tips menulis masing-masing dengan efektif.",
+    //   category: "Tips Essay",
+    //   readTime: "9 menit",
+    //   date: "5 Oktober 2025",
+    //   image: "✍️",
+    //   imageUrl: "/images/motivation-letter.jpg",
+    //   color: "from-indigo-400 to-purple-600"
+    // },
+    // {
+    //   id: 6,
+    //   title: "Cara Mendapatkan Surat Rekomendasi yang Kuat untuk Beasiswa",
+    //   excerpt: "Surat rekomendasi yang baik bisa menjadi game-changer dalam aplikasi beasiswa Anda. Pelajari cara memilih pemberi rekomendasi yang tepat dan tips meminta surat rekomendasi.",
+    //   category: "Dokumen",
+    //   readTime: "7 menit",
+    //   date: "3 Oktober 2025",
+    //   image: "📨",
+    //   imageUrl: "/images/recommendation-letter.jpg",
+    //   color: "from-pink-400 to-red-500"
+    // },
+    // {
+    //   id: 7,
+    //   title: "5 Kesalahan Fatal yang Harus Dihindari Saat Apply Beasiswa",
+    //   excerpt: "Hindari kesalahan umum yang sering membuat aplikasi beasiswa ditolak. Dari deadline hingga format dokumen, pelajari apa saja yang harus dihindari.",
+    //   category: "Strategi",
+    //   readTime: "5 menit",
+    //   date: "1 Oktober 2025",
+    //   image: "⚠️",
+    //   imageUrl: "/images/common-mistakes.jpg",
+    //   color: "from-red-400 to-orange-500"
+    // },
+    // {
+    //   id: 8,
+    //   title: "Membangun Track Record untuk Memperkuat Aplikasi Beasiswa",
+    //   excerpt: "Track record yang solid adalah aset berharga dalam aplikasi beasiswa. Temukan cara membangun prestasi akademik dan non-akademik yang relevan.",
+    //   category: "Motivasi",
+    //   readTime: "8 menit",
+    //   date: "28 September 2025",
+    //   image: "🏆",
+    //   imageUrl: "/images/track-record.jpg",
+    //   color: "from-yellow-500 to-amber-600"
+    // }
   ];
 
   const filteredArticles = selectedCategory === 'Semua' 
@@ -118,23 +118,23 @@ export default function ArtikelPage() {
         </div>
 
         <nav className="space-y-2">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <BookOpen className="w-5 h-5" />
+          <a href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+            <Home className="w-5 h-5" />
             Beranda
-          </Link>
-          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </a>
+          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </Link>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
-            <Bell className="w-5 h-5" />
+          </a>
+          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <NotebookText className="w-5 h-5" />
             Artikel
           </a>
           <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
           </a>
@@ -229,30 +229,8 @@ export default function ArtikelPage() {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">1.2K</p>
-                <p className="text-sm text-gray-600">Pembaca</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Tag className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">{categories.length - 1}</p>
-                <p className="text-sm text-gray-600">Kategori</p>
-              </div>
-            </div>
-          </div>
         </div>
-
+      
         {/* Articles Grid */}
         <div className="mb-4">
           <h3 className="text-xl font-bold text-gray-800 mb-4">
@@ -264,7 +242,11 @@ export default function ArtikelPage() {
           {filteredArticles.slice(1).map(article => (
             <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
               <div className={`h-48 bg-gradient-to-r ${article.color} p-6 flex items-center justify-center relative overflow-hidden`}>
-                <div className="text-7xl opacity-80">{article.image}</div>
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                  />
                 <div className="absolute top-4 right-4">
                   <span className="px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">
                     {article.category}

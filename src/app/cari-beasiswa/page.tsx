@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Filter, MapPin, DollarSign, Calendar, BookOpen, GraduationCap, Bell, User } from 'lucide-react';
+import { Search, Bell, User, BookOpen, GraduationCap, TrendingUp, Calendar, MapPin, DollarSign, Home, NotebookText,Filter } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CariBeasiswa() {
@@ -171,23 +171,23 @@ export default function CariBeasiswa() {
         </div>
 
         <nav className="space-y-2">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
-            <BookOpen className="w-5 h-5" />
+          <a href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+            <Home className="w-5 h-5" />
             Beranda
-          </Link>
-          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </a>
+          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </Link>
+          </a>
           <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <Bell className="w-5 h-5" />
+            <NotebookText className="w-5 h-5" />
             Artikel
           </a>
           <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
           </a>

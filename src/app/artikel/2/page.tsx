@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowLeft, Tag, Share2, Bookmark, Home, NotebookText } from 'lucide-react';
+import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowLeft, Home, NotebookText } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ArtikelReadPage() {
+export default function ArtikelInterviewPage() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
@@ -42,7 +42,7 @@ export default function ArtikelReadPage() {
         <div className="absolute bottom-6 left-6 right-6">
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-4 text-white">
             <p className="text-sm font-semibold mb-1">💡 Tips Hari Ini</p>
-            <p className="text-xs opacity-90">Mulai persiapan dokumen beasiswa dari sekarang!</p>
+            <p className="text-xs opacity-90">Siapkan diri sebelum interview dimulai!</p>
           </div>
         </div>
       </aside>
@@ -56,12 +56,11 @@ export default function ArtikelReadPage() {
             Kembali ke Artikel
           </Link>
         </div>
-
         {/* Header Section with Background Image */}
         <div
           className="relative px-8 py-16 text-white overflow-hidden"
           style={{
-            backgroundImage: "url('/components/placeholder/image1.jpg')",
+            backgroundImage: "url('/components/placeholder/image2.jpg')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -72,23 +71,23 @@ export default function ArtikelReadPage() {
           <div className="relative z-10 max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
               <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">
-                Tips Essay
+                Persiapan Beasiswa
               </span>
               <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">
-                ⭐ Artikel Unggulan
+                💼 Panduan Lengkap
               </span>
             </div>
             <h1 className="text-4xl font-bold mb-4">
-              10 Tips Menulis Essay Beasiswa yang Menarik Perhatian Reviewer
+              Cara Mempersiapkan Interview Beasiswa: Dari Riset hingga Follow-up
             </h1>
             <div className="flex items-center gap-6 text-white/90">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                <span>8 menit baca</span>
+                <span>10 menit baca</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
-                <span>15 Oktober 2025</span>
+                <span>18 Oktober 2025</span>
               </div>
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5" />
@@ -108,31 +107,46 @@ export default function ArtikelReadPage() {
                   {/* Introduction */}
                   <div className="prose prose-lg max-w-none mb-8">
                     <p className="text-gray-700 leading-relaxed">
-                      Essay adalah salah satu komponen terpenting dalam aplikasi beasiswa. Sebuah essay yang baik dapat membedakan Anda dari ratusan atau bahkan ribuan kandidat lainnya. Essay memberikan kesempatan bagi reviewer untuk mengenal Anda secara personal motivasi, pengalaman, dan visi masa depan Anda.
+                      Tahap interview adalah momen krusial dalam proses seleksi beasiswa. Setelah berhasil melewati tahap administrasi dan essay, kini saatnya Anda meyakinkan reviewer secara langsung bahwa Anda memang layak mendapatkan kesempatan tersebut.
                     </p>
                     <p className="text-gray-700 leading-relaxed">
-                      Namun, menulis essay yang menarik perhatian reviewer bukanlah hal yang mudah. Dibutuhkan strategi, persiapan, dan pemahaman yang baik tentang apa yang dicari oleh pemberi beasiswa. Berikut adalah 10 tips yang akan membantu Anda menulis essay beasiswa yang powerful dan memorable.
+                      Banyak kandidat merasa gugup atau tidak tahu harus mulai dari mana. Padahal, dengan persiapan yang matang, sesi interview bisa menjadi ajang untuk menunjukkan kepribadian, visi, dan potensi Anda dengan cara yang paling autentik.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed">
+                      Berikut panduan lengkap untuk membantu Anda mempersiapkan interview beasiswa dari awal hingga tahap follow-up.
                     </p>
                   </div>
 
                   {/* Tips Section */}
                   <div className="space-y-8">
-                    {/* Tip 1 */}
                     <div>
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                           <span className="text-white font-bold">1</span>
                         </div>
                         <div>
-                          <h2 className="text-2xl font-bold text-gray-800 mb-2">Pahami Pertanyaan dengan Benar</h2>
+                          <h2 className="text-2xl font-bold text-gray-800 mb-2">Pahami Profil dan Nilai Pemberi Beasiswa</h2>
                           <p className="text-gray-700 leading-relaxed">
-                            Sebelum mulai menulis, luangkan waktu untuk benar-benar memahami apa yang ditanyakan. Baca pertanyaan berkali-kali dan identifikasi kata kunci penting. Apakah mereka meminta Anda menjelaskan motivasi, pengalaman, atau rencana masa depan? Pastikan essay Anda menjawab pertanyaan dengan tepat dan tidak keluar dari topik.
+                            Sebelum menjawab satu pun pertanyaan, pastikan Anda benar-benar mengenal siapa yang memberikan beasiswa tersebut.
+                          </p>
+                          <p className="text-gray-700 leading-relaxed">
+                            Pelajari hal-hal berikut:
+                          </p>
+                          <ul className="list-disc ml-5 text-gray-700 leading-relaxed">
+                            <li>Apa visi dan misi lembaga atau universitasnya?</li>
+                            <li>Apa tujuan program beasiswa ini dibentuk?</li>
+                            <li>Siapa tipe penerima beasiswa yang mereka cari?</li>
+                          </ul>
+                          <p className="text-gray-700 leading-relaxed">
+                            💡 Contoh:
+                          </p>
+                          <p className="text-gray-700 leading-relaxed">
+                            Jika beasiswa fokus pada kepemimpinan sosial, siapkan contoh konkret bagaimana Anda memimpin tim atau membuat dampak sosial di lingkungan Anda. Jika program menekankan riset ilmiah, soroti proyek penelitian Anda dan bagaimana hal itu berkontribusi bagi bidang studi tertentu.
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    {/* Tip 2 */}
                     <div>
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -153,7 +167,6 @@ export default function ArtikelReadPage() {
                       </div>
                     </div>
 
-                    {/* Tip 3 */}
                     <div>
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -168,7 +181,6 @@ export default function ArtikelReadPage() {
                       </div>
                     </div>
 
-                    {/* Tip 4 */}
                     <div>
                       <div className="flex items-start gap-4 mb-3">
                         <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
