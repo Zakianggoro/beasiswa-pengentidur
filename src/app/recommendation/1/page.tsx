@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { BookOpen, Search, Bell, Calendar, User, MapPin, DollarSign, Building2, ArrowLeft, Clock, GraduationCap, Share2, Bookmark, Home, NotebookText} from 'lucide-react';
+import { BookOpen, Search, Calendar, User, MapPin, DollarSign, Building2, ArrowLeft, Clock, GraduationCap, Share2, Bookmark, Home, NotebookText} from 'lucide-react';
 import Link from 'next/link';
 
 export default function BeasiswaDetailPage() {
@@ -43,26 +43,26 @@ export default function BeasiswaDetailPage() {
         </div>
 
         <nav className="space-y-2">
-          <a href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <Home className="w-5 h-5" />
             Beranda
-          </a>
-          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </a>
-          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <NotebookText className="w-5 h-5" />
             Artikel
-          </a>
-          <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
-          </a>
-          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
-          </a>
+          </Link>
         </nav>
 
         <div className="absolute bottom-6 left-6 right-6">

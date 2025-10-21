@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowLeft, Tag, Share2, Bookmark, Home, NotebookText } from 'lucide-react';
+import { BookOpen, Search, Calendar, User, Clock, ArrowLeft, Home, NotebookText } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ArtikelReadPage() {
@@ -17,26 +17,26 @@ export default function ArtikelReadPage() {
         </div>
 
         <nav className="space-y-2">
-          <a href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <Home className="w-5 h-5" />
             Beranda
-          </a>
-          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             Cari Beasiswa
-          </a>
-          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <NotebookText className="w-5 h-5" />
             Artikel
-          </a>
-          <a href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
-          </a>
-          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
-          </a>
+          </Link>
         </nav>
 
         <div className="absolute bottom-6 left-6 right-6">
@@ -141,12 +141,12 @@ export default function ArtikelReadPage() {
                         <div>
                           <h2 className="text-2xl font-bold text-gray-800 mb-2">Buat Opening yang Kuat</h2>
                           <p className="text-gray-700 leading-relaxed mb-3">
-                            Paragraf pertama adalah kesempatan Anda untuk menarik perhatian reviewer. Mulailah dengan sesuatu yang menarik—bisa berupa anekdot personal, pertanyaan retoris, atau pernyataan yang mengejutkan. Hindari opening yang klise seperti "Sejak kecil saya bermimpi..." atau "Saya tertarik untuk..."
+                            {'Paragraf pertama adalah kesempatan Anda untuk menarik perhatian reviewer. Mulailah dengan sesuatu yang menarik—bisa berupa anekdot personal, pertanyaan retoris, atau pernyataan yang mengejutkan. Hindari opening yang klise seperti "Sejak kecil saya bermimpi..." atau "Saya tertarik untuk..."'}
                           </p>
                           <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
                             <p className="text-sm text-gray-700 italic">
                               <strong>Contoh Opening yang Baik:</strong><br/>
-                              "Ketika saya melihat ibu saya menangis karena tidak mampu membayar biaya pengobatan adik saya, saat itulah saya memutuskan untuk menjadi dokter yang tidak hanya mengobati penyakit, tetapi juga memberikan akses kesehatan yang terjangkau bagi masyarakat."
+                              Ketika saya melihat ibu saya menangis karena tidak mampu membayar biaya pengobatan adik saya, saat itulah saya memutuskan untuk menjadi dokter yang tidak hanya mengobati penyakit, tetapi juga memberikan akses kesehatan yang terjangkau bagi masyarakat.
                             </p>
                           </div>
                         </div>
@@ -177,16 +177,16 @@ export default function ArtikelReadPage() {
                         <div>
                           <h2 className="text-2xl font-bold text-gray-800 mb-2">Tunjukkan, Jangan Hanya Memberitahu</h2>
                           <p className="text-gray-700 leading-relaxed mb-3">
-                            Alih-alih menulis "Saya adalah orang yang gigih," tunjukkan kegigihan Anda melalui contoh konkret. Misalnya, ceritakan bagaimana Anda bekerja paruh waktu sambil kuliah untuk membiayai pendidikan, atau bagaimana Anda terus mencoba meskipun gagal berkali-kali.
+                            {'Alih-alih menulis "Saya adalah orang yang gigih," tunjukkan kegigihan Anda melalui contoh konkret. Misalnya, ceritakan bagaimana Anda bekerja paruh waktu sambil kuliah untuk membiayai pendidikan, atau bagaimana Anda terus mencoba meskipun gagal berkali-kali.'}
                           </p>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="bg-red-50 border border-red-200 p-4 rounded">
                               <p className="text-xs font-semibold text-red-700 mb-2">❌ JANGAN:</p>
-                              <p className="text-sm text-gray-700">"Saya sangat termotivasi dan pekerja keras."</p>
+                              <p className="text-sm text-gray-700">Saya sangat termotivasi dan pekerja keras.</p>
                             </div>
                             <div className="bg-green-50 border border-green-200 p-4 rounded">
                               <p className="text-xs font-semibold text-green-700 mb-2">✅ LAKUKAN:</p>
-                              <p className="text-sm text-gray-700">"Saya bangun pukul 4 pagi setiap hari untuk belajar sebelum bekerja 8 jam di toko keluarga."</p>
+                              <p className="text-sm text-gray-700">Saya bangun pukul 4 pagi setiap hari untuk belajar sebelum bekerja 8 jam di toko keluarga.</p>
                             </div>
                           </div>
                         </div>
