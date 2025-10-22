@@ -110,7 +110,7 @@ export default function ChatbotPage() {
         </div>
 
         <nav className="space-y-2">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Home className="w-5 h-5" />
             Beranda
           </Link>
@@ -126,7 +126,7 @@ export default function ChatbotPage() {
             <Calendar className="w-5 h-5" />
             Deadline
           </Link>
-          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
           </Link>

@@ -1,4 +1,3 @@
-// app/cari-beasiswa/cari.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -171,11 +170,11 @@ export default function CariBeasiswa() {
         </div>
 
         <nav className="space-y-2">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Home className="w-5 h-5" />
             Beranda
           </Link>
-          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <Search className="w-5 h-5" />
             Cari Beasiswa
           </Link>
@@ -218,7 +217,7 @@ export default function CariBeasiswa() {
                 placeholder="Cari beasiswa, penyedia, atau deskripsi..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <Search className="w-5 h-5 text-gray-400 absolute left-3 top-3.5" />
             </div>
