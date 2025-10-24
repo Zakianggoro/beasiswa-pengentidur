@@ -86,9 +86,13 @@ export default function Dashboard() {
           S3: s3Data.count || 0,
         });
 
-      } catch (err: any) {
+      } catch (err) {
         console.error("Error fetching dashboard data:", err);
-        setError(err.message);
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Terjadi kesalahan yang tidak diketahui");
+        }
       } finally {
         setLoading(false);
       }
