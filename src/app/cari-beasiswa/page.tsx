@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Search, User, BookOpen, GraduationCap, Calendar, MapPin, DollarSign, Home, NotebookText, Filter } from 'lucide-react';
 import Link from 'next/link';
 import { supabase } from '../../../database/supabaseClient';
@@ -17,15 +18,19 @@ interface Beasiswa {
   tingkat: string;
 }
 
-export default function CariBeasiswa() {
-  const [searchQuery, setSearchQuery] = useState('');
+function CariBeasiswaContent() {
+  const searchParams = useSearchParams();
+  const tingkatQuery = searchParams.get('tingkat');
+  const searchQueryParam = searchParams.get('q');
+
+  const [searchQuery, setSearchQuery] = useState(searchQueryParam || '');
   const [selectedFilters, setSelectedFilters] = useState({
     lokasi: [] as string[],
     tipe: [] as string[],
-    tingkat: [] as string[]
+    tingkat: tingkatQuery ? [tingkatQuery] : [] as string[]
   });
-  const [showFilters, setShowFilters] = useState(false);
-
+  
+  const [showFilters, setShowFilters] = useState(tingkatQuery ? true : false);
   const [scholarships, setScholarships] = useState<Beasiswa[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +55,6 @@ export default function CariBeasiswa() {
 
     fetchBeasiswa();
   }, []);
-
 
   const lokasiOptions = [
     { value: "Dalam Negeri", label: "Dalam Negeri" },
@@ -344,5 +348,41 @@ export default function CariBeasiswa() {
         )}
       </main>
     </div>
+  );
+}
+
+
+export default function CariBeasiswaPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen bg-gray-50">
+        <aside className="w-64 bg-white border-r border-gray-200 p-6 fixed h-full animate-pulse">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 bg-gray-200 rounded-lg"></div>
+            <div className="h-6 bg-gray-200 rounded w-32"></div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-10 bg-gray-200 rounded-lg"></div>
+            <div className="h-10 bg-gray-200 rounded-lg"></div>
+            <div className="h-10 bg-gray-200 rounded-lg"></div>
+            <div className="h-10 bg-gray-200 rounded-lg"></div>
+          </div>
+        </aside>
+        <main className="ml-64 flex-1 p-8">
+          <div className="mb-8">
+            <div className="h-9 bg-gray-200 rounded w-1/3 mb-2"></div>
+            <div className="h-5 bg-gray-200 rounded w-1/2"></div>
+          </div>
+          <div className="bg-white rounded-xl p-6 mb-8 border border-gray-200">
+            <div className="h-12 bg-gray-200 rounded-lg"></div>
+          </div>
+          <div className="bg-white rounded-xl p-12 text-center border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800">Memuat data...</h3>
+          </div>
+        </main>
+      </div>
+    }>
+      <CariBeasiswaContent />
+    </Suspense>
   );
 }
