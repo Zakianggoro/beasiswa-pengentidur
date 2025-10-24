@@ -1,17 +1,19 @@
-'use client'
+'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { BookOpen, Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, Home, NotebookText} from 'lucide-react';
+import { BookOpen, Search, Bell, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
 import Link from 'next/link';
+import ReactMarkdown from "react-markdown";
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([
     {
       id: 1,
       type: 'bot',
-      content: 'Halo! Saya BEBOT, asisten virtual untuk membantu Anda menemukan beasiswa yang tepat. Ada yang bisa saya bantu hari ini?',
-      timestamp: new Date()
-    }
+      content:
+        'Halo! Saya BEBOT, asisten virtual untuk membantu Anda menemukan beasiswa yang tepat. Ada yang bisa saya bantu hari ini?',
+      timestamp: new Date(),
+    },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -21,7 +23,7 @@ export default function ChatbotPage() {
     { id: 1, text: 'Cari beasiswa S1', icon: '🎓' },
     { id: 2, text: 'Tips menulis essay', icon: '📝' },
     { id: 3, text: 'Deadline terdekat', icon: '⏰' },
-    { id: 4, text: 'Beasiswa luar negeri', icon: '✈️' }
+    { id: 4, text: 'Beasiswa luar negeri', icon: '✈️' },
   ];
 
   const scrollToBottom = () => {
@@ -32,6 +34,7 @@ export default function ChatbotPage() {
     scrollToBottom();
   }, [messages]);
 
+  // ✅ Correctly handle sending messages
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -40,39 +43,44 @@ export default function ChatbotPage() {
       id: messages.length + 1,
       type: 'user' as const,
       content: inputMessage,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
-
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulate bot response (replace with actual AI later)
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: inputMessage }),
+      });
+
+      const data = await res.json();
+      const botReply = data.reply || 'Maaf, saya tidak menemukan jawaban yang sesuai.';
+
       const botResponse = {
         id: messages.length + 2,
         type: 'bot' as const,
-        content: getDummyResponse(inputMessage),
-        timestamp: new Date()
+        content: botReply,
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
-  };
 
-  const getDummyResponse = (userInput: string) => {
-    const input = userInput.toLowerCase();
-    
-    if (input.includes('s1') || input.includes('sarjana')) {
-      return 'Saya menemukan beberapa beasiswa S1 yang mungkin cocok untuk Anda:\n\n1. Beasiswa Unggulan Kemendikbud 2025 (Deadline: 31 Desember 2025)\n2. Beasiswa Kemitraan Universitas (Deadline: 30 November 2025)\n\nApakah Anda ingin informasi lebih detail tentang salah satu beasiswa ini?';
-    } else if (input.includes('essay') || input.includes('menulis')) {
-      return 'Tips menulis essay beasiswa yang baik:\n\n1. Pahami pertanyaan dengan benar\n2. Buat opening yang menarik\n3. Ceritakan kisah yang autentik\n4. Tunjukkan, jangan hanya memberitahu\n5. Hubungkan dengan tujuan beasiswa\n\nSaya punya artikel lengkap tentang tips menulis essay. Ingin saya bagikan linknya?';
-    } else if (input.includes('deadline')) {
-      return 'Berikut beasiswa dengan deadline terdekat:\n\n1. Fulbright Indonesia - 31 Oktober 2025 (13 hari lagi)\n2. Chevening Scholarship UK - 8 November 2025 (21 hari lagi)\n\nJangan sampai terlewat! Apakah Anda ingin reminder untuk deadline ini?';
-    } else if (input.includes('luar negeri') || input.includes('internasional')) {
-      return 'Beasiswa luar negeri populer:\n\n1. LPDP Scholarship Program (Global)\n2. Chevening Scholarship (UK)\n3. Erasmus Mundus (Europe)\n4. Fulbright (USA)\n\nNegara mana yang Anda minati?';
-    } else {
-      return 'Terima kasih atas pertanyaannya! Saya siap membantu Anda menemukan beasiswa yang tepat. Anda bisa menanyakan tentang:\n\n• Beasiswa berdasarkan jenjang (S1/S2/S3)\n• Tips aplikasi beasiswa\n• Deadline beasiswa\n• Beasiswa berdasarkan negara\n\nAda yang bisa saya bantu?';
+      setMessages((prev) => [...prev, botResponse]);
+    } catch (error) {
+      console.error('Error calling BEBOT API:', error);
+
+      const errorResponse = {
+        id: messages.length + 2,
+        type: 'bot' as const,
+        content:
+          'Maaf, saya mengalami kendala teknis. Silakan coba lagi dalam beberapa saat. Anda juga bisa mencari beasiswa melalui menu "Cari Beasiswa" atau membaca artikel tips beasiswa di menu "Artikel".',
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
+      setIsTyping(false);
     }
   };
 
@@ -92,9 +100,10 @@ export default function ChatbotPage() {
       {
         id: 1,
         type: 'bot',
-        content: 'Halo! Saya BEBOT, asisten virtual untuk membantu Anda menemukan beasiswa yang tepat. Ada yang bisa saya bantu hari ini?',
-        timestamp: new Date()
-      }
+        content:
+          'Halo! Saya BEBOT, asisten virtual untuk membantu Anda menemukan beasiswa yang tepat. Ada yang bisa saya bantu hari ini?',
+        timestamp: new Date(),
+      },
     ]);
   };
 
@@ -111,7 +120,7 @@ export default function ChatbotPage() {
 
         <nav className="space-y-2">
           <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <Home className="w-5 h-5" />
+            <BookOpen className="w-5 h-5" />
             Beranda
           </Link>
           <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
@@ -119,17 +128,17 @@ export default function ChatbotPage() {
             Cari Beasiswa
           </Link>
           <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <NotebookText className="w-5 h-5" />
+            <Bell className="w-5 h-5" />
             Artikel
           </Link>
           <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
             Deadline
           </Link>
-          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <User className="w-5 h-5" />
             Beasiswa Bot (BEBOT)
-          </Link>
+          </a>
         </nav>
 
         <div className="absolute bottom-6 left-6 right-6">
@@ -171,17 +180,15 @@ export default function ChatbotPage() {
         <div className="flex-1 overflow-y-auto px-8 py-6 bg-gray-50">
           <div className="max-w-4xl mx-auto space-y-4">
             {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+              <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex gap-3 max-w-3xl ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                  {/* Avatar */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.type === 'bot' 
-                      ? 'bg-gradient-to-br from-blue-500 to-purple-600' 
-                      : 'bg-blue-600'
-                  }`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      message.type === 'bot'
+                        ? 'bg-gradient-to-br from-blue-500 to-purple-600'
+                        : 'bg-blue-600'
+                    }`}
+                  >
                     {message.type === 'bot' ? (
                       <Bot className="w-5 h-5 text-white" />
                     ) : (
@@ -189,24 +196,31 @@ export default function ChatbotPage() {
                     )}
                   </div>
 
-                  {/* Message Content */}
                   <div className={`flex flex-col ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
-                    <div className={`rounded-2xl px-4 py-3 ${
-                      message.type === 'bot'
-                        ? 'bg-white border border-gray-200'
-                        : 'bg-blue-600 text-white'
-                    }`}>
-                      <p className={`text-sm whitespace-pre-line ${
-                        message.type === 'bot' ? 'text-gray-800' : 'text-white'
-                      }`}>
-                        {message.content}
-                      </p>
+                    <div
+                      className={`rounded-2xl px-4 py-3 ${
+                        message.type === 'bot'
+                          ? 'bg-white border border-gray-200'
+                          : 'bg-blue-600 text-white'
+                      }`}
+                    >
+                    <div
+                      className={`prose prose-sm max-w-none ${
+                        message.type === 'bot'
+                          ? 'text-gray-800 prose-p:my-1 prose-li:my-0 prose-strong:text-blue-700'
+                          : 'text-white'
+                      }`}
+                    >
+                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                    </div>
                     </div>
                     <span className="text-xs text-gray-500 mt-1 px-2">
-                      {message.timestamp.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
+                      {message.timestamp.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
                     </span>
 
-                    {/* Bot Message Actions */}
                     {message.type === 'bot' && message.id !== 1 && (
                       <div className="flex items-center gap-2 mt-2 px-2">
                         <button className="p-1 hover:bg-gray-100 rounded transition">
@@ -222,7 +236,6 @@ export default function ChatbotPage() {
               </div>
             ))}
 
-            {/* Typing Indicator */}
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex gap-3 max-w-3xl">
@@ -232,8 +245,14 @@ export default function ChatbotPage() {
                   <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.2s' }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.4s' }}
+                      ></div>
                     </div>
                   </div>
                 </div>
