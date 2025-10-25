@@ -259,6 +259,14 @@ export default function AdminDashboard() {
 }
 
 /* Reusable Inputs */
+interface InputProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  type?: string;
+}
+
 const Input = ({ label, name, value, onChange, type = 'text' }: any) => (
   <div>
     <label className="block text-sm font-semibold text-gray-700 mb-2">

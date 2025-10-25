@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Lock, User, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -143,9 +144,9 @@ export default function AdminLogin() {
 
         {/* Back to Home */}
         <div className="text-center mt-6">
-          <a href="/" className="text-white hover:text-blue-200 transition text-sm">
+          <Link href="/" className="text-white hover:text-blue-200 transition text-sm">
             ← Kembali ke Beranda
-          </a>
+          </Link>
         </div>
       </div>
     </div>
