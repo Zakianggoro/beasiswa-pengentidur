@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useState } from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText } from 'lucide-react';
+import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ArtikelPage() {
   const [selectedCategory, setSelectedCategory] = useState('Semua');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const categories = ['Semua', 'Tips Essay', 'Interview', 'Dokumen', 'Motivasi', 'Strategi'];
 
@@ -42,62 +43,7 @@ export default function ArtikelPage() {
       image: "📋",
       imageUrl: "/components/placeholder/image3.jpg",
       color: "from-green-400 to-teal-500"
-    },
-    // {
-    //   id: 4,
-    //   title: "Strategi Memilih Beasiswa yang Tepat Sesuai Profil Anda",
-    //   excerpt: "Tidak semua beasiswa cocok untuk semua orang. Pelajari cara menganalisis profil Anda dan memilih beasiswa yang paling sesuai untuk meningkatkan peluang sukses.",
-    //   category: "Strategi",
-    //   readTime: "7 menit",
-    //   date: "8 Oktober 2025",
-    //   image: "🎯",
-    //   imageUrl: "/images/scholarship-strategy.jpg",
-    //   color: "from-blue-400 to-blue-600"
-    // },
-    // {
-    //   id: 5,
-    //   title: "Motivation Letter vs Personal Statement: Apa Bedanya dan Bagaimana Menulisnya",
-    //   excerpt: "Banyak yang bingung membedakan motivation letter dan personal statement. Artikel ini menjelaskan perbedaan keduanya dan tips menulis masing-masing dengan efektif.",
-    //   category: "Tips Essay",
-    //   readTime: "9 menit",
-    //   date: "5 Oktober 2025",
-    //   image: "✍️",
-    //   imageUrl: "/images/motivation-letter.jpg",
-    //   color: "from-indigo-400 to-purple-600"
-    // },
-    // {
-    //   id: 6,
-    //   title: "Cara Mendapatkan Surat Rekomendasi yang Kuat untuk Beasiswa",
-    //   excerpt: "Surat rekomendasi yang baik bisa menjadi game-changer dalam aplikasi beasiswa Anda. Pelajari cara memilih pemberi rekomendasi yang tepat dan tips meminta surat rekomendasi.",
-    //   category: "Dokumen",
-    //   readTime: "7 menit",
-    //   date: "3 Oktober 2025",
-    //   image: "📨",
-    //   imageUrl: "/images/recommendation-letter.jpg",
-    //   color: "from-pink-400 to-red-500"
-    // },
-    // {
-    //   id: 7,
-    //   title: "5 Kesalahan Fatal yang Harus Dihindari Saat Apply Beasiswa",
-    //   excerpt: "Hindari kesalahan umum yang sering membuat aplikasi beasiswa ditolak. Dari deadline hingga format dokumen, pelajari apa saja yang harus dihindari.",
-    //   category: "Strategi",
-    //   readTime: "5 menit",
-    //   date: "1 Oktober 2025",
-    //   image: "⚠️",
-    //   imageUrl: "/images/common-mistakes.jpg",
-    //   color: "from-red-400 to-orange-500"
-    // },
-    // {
-    //   id: 8,
-    //   title: "Membangun Track Record untuk Memperkuat Aplikasi Beasiswa",
-    //   excerpt: "Track record yang solid adalah aset berharga dalam aplikasi beasiswa. Temukan cara membangun prestasi akademik dan non-akademik yang relevan.",
-    //   category: "Motivasi",
-    //   readTime: "8 menit",
-    //   date: "28 September 2025",
-    //   image: "🏆",
-    //   imageUrl: "/images/track-record.jpg",
-    //   color: "from-yellow-500 to-amber-600"
-    // }
+    }
   ];
 
   const filteredArticles = selectedCategory === 'Semua' 
@@ -108,11 +54,31 @@ export default function ArtikelPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-6 fixed h-full">
+      <aside className={`
+        w-64 bg-white border-r border-gray-200 p-6 fixed h-full z-50 transition-transform duration-300
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0
+      `}>
+        {/* Close Button (Mobile Only) */}
+        <button 
+          onClick={() => setSidebarOpen(false)}
+          className="absolute top-4 right-4 p-2 lg:hidden hover:bg-gray-100 rounded-lg"
+        >
+          <X className="w-5 h-5 text-gray-600" />
+        </button>
+
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-white" />
+            <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="font-bold text-xl text-gray-800">BeasiswaKu</span>
         </div>
@@ -120,23 +86,23 @@ export default function ArtikelPage() {
         <nav className="space-y-2">
           <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Home className="w-5 h-5" />
-            Beranda
+            <span>Beranda</span>
           </Link>
           <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
-            Cari Beasiswa
+            <span>Cari Beasiswa</span>
           </Link>
           <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <NotebookText className="w-5 h-5" />
-            Artikel
+            <span>Artikel</span>
           </Link>
           <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
-            Deadline
+            <span>Deadline</span>
           </Link>
           <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
-            Beasiswa Bot (BEBOT)
+            <span>Beasiswa Bot (BEBOT)</span>
           </Link>
         </nav>
 
@@ -149,144 +115,163 @@ export default function ArtikelPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-64 flex-1 p-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Artikel & Tips Beasiswa</h1>
-          <p className="text-gray-600">Pelajari tips dan strategi untuk meningkatkan peluang mendapatkan beasiswa</p>
-        </div>
-
-        {/* Featured Article */}
-        <div className="relative rounded-2xl overflow-hidden mb-8 h-96">
-          <img 
-            src={featuredArticle.imageUrl} 
-            alt={featuredArticle.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-          <div className="absolute inset-0 p-8 flex items-center">
-            <div className="relative z-10 max-w-3xl text-white">
-              <div className="absolute top-0 right-0">
-                <span className="px-3 py-1 bg-white text-gray-800 text-xs font-semibold rounded-full">
-                  ⭐ Artikel Unggulan
-                </span>
-              </div>
-              <div className="flex items-center gap-2 mb-3">
-                <Tag className="w-4 h-4" />
-                <span className="text-sm font-semibold">{featuredArticle.category}</span>
-              </div>
-              <h2 className="text-3xl font-bold mb-3">{featuredArticle.title}</h2>
-              <p className="text-white/90 mb-6 text-lg">
-                {featuredArticle.excerpt}
-              </p>
-              <div className="flex items-center gap-6 mb-6">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">{featuredArticle.readTime} baca</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span className="text-sm">{featuredArticle.date}</span>
-                </div>
-              </div>
-              <Link href={`/artikel/${featuredArticle.id}`} className="px-6 py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 inline-flex">
-                Baca Artikel
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+      <main className="flex-1 lg:ml-64">
+        {/* Mobile Header with Hamburger */}
+        <div className="lg:hidden sticky top-0 z-30 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+          <button 
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 hover:bg-gray-100 rounded-lg"
+          >
+            <Menu className="w-6 h-6 text-gray-600" />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <GraduationCap className="w-5 h-5 text-white" />
             </div>
+            <span className="font-bold text-lg text-gray-800">BeasiswaKu</span>
           </div>
+          <div className="w-10"></div>
         </div>
 
-        {/* Category Filter */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3 flex-wrap">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
-                  selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+        <div className="p-4 md:p-6 lg:p-8">
+          {/* Header */}
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Artikel & Tips Beasiswa</h1>
+            <p className="text-gray-600 text-sm md:text-base">Pelajari tips dan strategi untuk meningkatkan peluang mendapatkan beasiswa</p>
           </div>
-        </div>
 
-        {/* Stats Bar */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">{articles.length}</p>
-                <p className="text-sm text-gray-600">Total Artikel</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-        {/* Articles Grid */}
-        <div className="mb-4">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">
-            {selectedCategory === 'Semua' ? 'Semua Artikel' : `Artikel ${selectedCategory}`}
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
-          {filteredArticles.slice(1).map(article => (
-            <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
-              <div className={`h-48 bg-gradient-to-r ${article.color} p-6 flex items-center justify-center relative overflow-hidden`}>
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
-                  />
-                <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">
-                    {article.category}
+          {/* Featured Article */}
+          <div className="relative rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 h-64 md:h-80 lg:h-96">
+            <img 
+              src={featuredArticle.imageUrl} 
+              alt={featuredArticle.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            <div className="absolute inset-0 p-4 md:p-6 lg:p-8 flex items-center">
+              <div className="relative z-10 max-w-3xl text-white">
+                <div className="mb-3">
+                  <span className="px-3 py-1 bg-white text-gray-800 text-xs font-semibold rounded-full">
+                    ⭐ Artikel Unggulan
                   </span>
                 </div>
-              </div>
-              <div className="p-6">
-                <h4 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-blue-600 transition">
-                  {article.title}
-                </h4>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  {article.excerpt}
+                <div className="flex items-center gap-2 mb-2 md:mb-3">
+                  <Tag className="w-3 h-3 md:w-4 md:h-4" />
+                  <span className="text-xs md:text-sm font-semibold">{featuredArticle.category}</span>
+                </div>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">{featuredArticle.title}</h2>
+                <p className="hidden md:block text-white/90 mb-4 md:mb-6 text-sm md:text-base lg:text-lg">
+                  {featuredArticle.excerpt}
                 </p>
-                <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                <div className="flex items-center gap-3 md:gap-6 mb-4 md:mb-6 text-xs md:text-sm">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>{article.readTime}</span>
+                    <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                    <span>{featuredArticle.readTime} baca</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>{article.date}</span>
+                    <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                    <span>{featuredArticle.date}</span>
                   </div>
                 </div>
-                <Link href={`/artikel/${article.id}`} className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2">
-                  Baca Selengkapnya
-                  <ArrowRight className="w-4 h-4" />
+                <Link href={`/artikel/${featuredArticle.id}`} className="px-4 md:px-6 py-2 md:py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 inline-flex text-sm md:text-base">
+                  Baca Artikel
+                  <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Load More Button */}
-        {filteredArticles.length > 6 && (
-          <div className="mt-8 text-center">
-            <button className="px-8 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition">
-              Muat Lebih Banyak Artikel
-            </button>
           </div>
-        )}
+
+          {/* Category Filter */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-medium transition text-sm md:text-base ${
+                    selectedCategory === category
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
+            <div className="bg-white rounded-xl p-4 border border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-xl md:text-2xl font-bold text-gray-800">{articles.length}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Total Artikel</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          {/* Articles Grid */}
+          <div className="mb-4">
+            <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
+              {selectedCategory === 'Semua' ? 'Semua Artikel' : `Artikel ${selectedCategory}`}
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {filteredArticles.slice(1).map(article => (
+              <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
+                <div className={`h-40 md:h-48 bg-gradient-to-r ${article.color} p-4 md:p-6 flex items-center justify-center relative overflow-hidden`}>
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute top-3 md:top-4 right-3 md:right-4">
+                    <span className="px-2 md:px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4 md:p-6">
+                  <h4 className="font-bold text-base md:text-lg text-gray-800 mb-2 group-hover:text-blue-600 transition">
+                    {article.title}
+                  </h4>
+                  <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-3 md:mb-4">
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                      <span>{article.readTime}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                      <span>{article.date}</span>
+                    </div>
+                  </div>
+                  <Link href={`/artikel/${article.id}`} className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 text-sm md:text-base">
+                    Baca Selengkapnya
+                    <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Load More Button */}
+          {filteredArticles.length > 6 && (
+            <div className="mt-6 md:mt-8 text-center">
+              <button className="px-6 md:px-8 py-2.5 md:py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition text-sm md:text-base">
+                Muat Lebih Banyak Artikel
+              </button>
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
