@@ -313,7 +313,7 @@ export default function AdminDashboard() {
                 placeholder="Cari beasiswa..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mb-4 px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             {filteredBeasiswa.length === 0 ? (
@@ -366,7 +366,7 @@ const Input: React.FC<InputProps> = ({ label, name, value, onChange, type = 'tex
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
 );
@@ -388,7 +388,7 @@ const Select: React.FC<SelectProps> = ({ label, name, value, onChange, options }
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
       {options.map((opt) => (
         <option key={opt} value={opt}>
@@ -416,7 +416,7 @@ const Textarea: React.FC<TextareaProps> = ({ label, name, value, onChange }) => 
       value={value}
       onChange={onChange}
       rows={5}
-      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
 );
