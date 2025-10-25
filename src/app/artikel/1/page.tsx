@@ -18,6 +18,7 @@ export default function ArtikelReadPage() {
       )}
 
       {/* Sidebar */}
+      <div className="hidden lg:block lg:col-span-1">
       <aside className={`
         w-64 bg-white border-r border-gray-200 p-6 fixed h-full z-50 transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -68,6 +69,7 @@ export default function ArtikelReadPage() {
           </div>
         </div>
       </aside>
+      </div>
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
@@ -140,7 +142,7 @@ export default function ArtikelReadPage() {
         {/* Article Content */}
         <div className="px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-8">
               {/* Main Article */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200 mb-6">
