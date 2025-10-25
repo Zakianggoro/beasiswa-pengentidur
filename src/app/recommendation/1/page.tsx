@@ -116,9 +116,9 @@ export default function BeasiswaDetailPage() {
 
         {/* Back Button */}
         <div className="bg-white border-b border-gray-200 px-4 md:px-6 lg:px-8 py-3 md:py-4">
-          <Link href="/cari-beasiswa" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base">
+          <Link href="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base">
             <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
-            Kembali ke Pencarian
+            Kembali ke Beranda
           </Link>
         </div>
 
