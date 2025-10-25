@@ -224,6 +224,7 @@ export default function BeasiswaDetailPage() {
                     href="https://www.kemdikbud.go.id" 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    className="inline-block px-6 md:px-8 py-2.5 md:py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition text-sm md:text-base"
                   >
                     Daftar Sekarang
                   </a>
