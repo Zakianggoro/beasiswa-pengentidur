@@ -267,7 +267,7 @@ interface InputProps {
   type?: string;
 }
 
-const Input = ({ label, name, value, onChange, type = 'text' }: any) => (
+const Input: React.FC<InputProps> = ({ label, name, value, onChange, type = 'text' }) => (
   <div>
     <label className="block text-sm font-semibold text-gray-700 mb-2">
       {label} *
@@ -282,7 +282,15 @@ const Input = ({ label, name, value, onChange, type = 'text' }: any) => (
   </div>
 );
 
-const Select = ({ label, name, value, onChange, options }: any) => (
+interface SelectProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  options: string[];
+}
+
+const Select: React.FC<SelectProps> = ({ label, name, value, onChange, options }) => (
   <div>
     <label className="block text-sm font-semibold text-gray-700 mb-2">
       {label} *
@@ -293,7 +301,7 @@ const Select = ({ label, name, value, onChange, options }: any) => (
       onChange={onChange}
       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
-      {options.map((opt: string) => (
+      {options.map((opt) => (
         <option key={opt} value={opt}>
           {opt}
         </option>
@@ -302,7 +310,14 @@ const Select = ({ label, name, value, onChange, options }: any) => (
   </div>
 );
 
-const Textarea = ({ label, name, value, onChange }: any) => (
+interface TextareaProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+}
+
+const Textarea: React.FC<TextareaProps> = ({ label, name, value, onChange }) => (
   <div>
     <label className="block text-sm font-semibold text-gray-700 mb-2">
       {label} *
