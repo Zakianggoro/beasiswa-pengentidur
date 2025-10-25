@@ -2,6 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Calendar, MapPin, DollarSign, GraduationCap, BookOpen, Search, User, Home, NotebookText, Menu, X } from 'lucide-react';
+import Link from 'next/link';
+import { supabase } from '../../../database/supabaseClient';
+
+interface BeasiswaDB {
+  id: number;
+  nama: string;
+  organizer: string;
+  deadline: string;
+  tipe: string;
+  lokasi: string;
+  path: string;
+  tingkat: string;
+}
 
 interface Scholarship {
   id: number;
@@ -20,53 +33,57 @@ export default function DeadlinePage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Mock scholarships data
-  const scholarships: Scholarship[] = [
-    {
-      id: 1,
-      title: "Beasiswa Unggulan Kemendikbud",
-      provider: "Kementerian Pendidikan",
-      deadline: new Date(2025, 9, 15),
-      amount: "Full Funded",
-      location: "Indonesia",
-      category: "S1",
-      color: "from-purple-500 to-indigo-600",
-      path: "#"
-    },
-    {
-      id: 2,
-      title: "LPDP Scholarship",
-      provider: "LPDP Indonesia",
-      deadline: new Date(2025, 9, 22),
-      amount: "Full Funded",
-      location: "Global",
-      category: "S2",
-      color: "from-blue-500 to-blue-700",
-      path: "#"
-    },
-    {
-      id: 3,
-      title: "Chevening Scholarship",
-      provider: "UK Government",
-      deadline: new Date(2025, 9, 8),
-      amount: "£18,000/year",
-      location: "United Kingdom",
-      category: "S2",
-      color: "from-orange-400 to-red-500",
-      path: "#"
-    },
-    {
-      id: 4,
-      title: "Fulbright Program",
-      provider: "US Government",
-      deadline: new Date(2025, 9, 28),
-      amount: "Full Funded",
-      location: "United States",
-      category: "S3",
-      color: "from-green-500 to-teal-600",
-      path: "#"
+  const [scholarships, setScholarships] = useState<Scholarship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchDeadlines() {
+      setLoading(true);
+      setError(null);
+
+      const { data, error } = await supabase
+        .from('Beasiswa')
+        .select('id, nama, organizer, deadline, lokasi, tingkat, path, tipe');
+
+      if (error) {
+        console.error('Error fetching deadlines:', error);
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      if (data) {
+        const colors = [
+          "from-purple-500 to-indigo-600",
+          "from-blue-500 to-blue-700",
+          "from-orange-400 to-red-500",
+          "from-green-500 to-teal-600",
+          "from-purple-500 to-pink-600",
+          "from-indigo-500 to-purple-600"
+        ];
+
+        const transformedData: Scholarship[] = data
+          .filter(item => item.deadline) 
+          .map((item: BeasiswaDB, index: number) => ({
+            id: item.id,
+            title: item.nama,
+            provider: item.organizer,
+            deadline: new Date(item.deadline),
+            location: item.lokasi,
+            category: item.tingkat,
+            path: item.path,
+            amount: item.tipe.includes('Full') ? "Full Funded" : item.tipe,
+            color: colors[index % colors.length]
+          }));
+        
+        setScholarships(transformedData);
+      }
+      setLoading(false);
     }
-  ];
+
+    fetchDeadlines();
+  }, []);
 
   const monthNames = [
     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
@@ -228,26 +245,26 @@ export default function DeadlinePage() {
         </div>
 
         <nav className="space-y-2">
-          <a href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Home className="w-5 h-5" />
             <span>Beranda</span>
-          </a>
-          <a href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
             <span>Cari Beasiswa</span>
-          </a>
-          <a href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <NotebookText className="w-5 h-5" />
             <span>Artikel</span>
-          </a>
-          <a href="/deadline" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          </Link>
+          <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <Calendar className="w-5 h-5" />
             <span>Deadline</span>
-          </a>
-          <a href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
+          </Link>
+          <Link href="/bebot" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <User className="w-5 h-5" />
             <span>Beasiswa Bot (BEBOT)</span>
-          </a>
+          </Link>
         </nav>
 
         <div className="absolute bottom-6 left-6 right-6">
@@ -283,178 +300,195 @@ export default function DeadlinePage() {
             <p className="text-sm md:text-base text-gray-600">Pantau deadline beasiswa yang akan datang</p>
           </div>
 
-          {/* Calendar and Selected Date - Mobile: Stack, Desktop: Side by side */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-            {/* Calendar */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
-                <div className="flex items-center justify-between mb-4 md:mb-6">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-                    {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-                  </h2>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={previousMonth}
-                      className="p-2 hover:bg-gray-100 rounded-lg transition"
-                    >
-                      <ChevronLeft className="w-5 h-5 text-gray-600" />
-                    </button>
-                    <button
-                      onClick={nextMonth}
-                      className="p-2 hover:bg-gray-100 rounded-lg transition"
-                    >
-                      <ChevronRight className="w-5 h-5 text-gray-600" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Day Names */}
-                <div className="grid grid-cols-7 gap-1 md:gap-2 mb-2">
-                  {dayNames.map(day => (
-                    <div key={day} className="text-center text-xs md:text-sm font-semibold text-gray-600 p-1 md:p-2">
-                      {day}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Calendar Grid */}
-                <div className="grid grid-cols-7 gap-1 md:gap-2">
-                  {renderCalendarDays()}
-                </div>
-
-                {/* Legend */}
-                <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                  <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-blue-500 rounded"></div>
-                      <span className="text-gray-600">Hari Ini</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-blue-50 border border-blue-200 rounded"></div>
-                      <span className="text-gray-600">Ada Deadline</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 ring-2 ring-blue-500 bg-blue-100 rounded"></div>
-                      <span className="text-gray-600">Dipilih</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {loading && (
+            <div className="text-center py-12 md:py-20 bg-white rounded-xl border border-gray-200">
+              <p className="text-gray-600 text-sm md:text-base">Memuat data kalender...</p>
             </div>
+          )}
 
-            {/* Selected Date Details */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 lg:sticky lg:top-8">
-                {selectedDate ? (
-                  <>
-                    <div className="mb-4 md:mb-6">
-                      <div className="flex items-center gap-2 text-blue-600 mb-2">
-                        <Calendar className="w-5 h-5" />
-                        <span className="font-semibold text-sm md:text-base">Deadline Terpilih</span>
+          {error && (
+            <div className="text-center py-12 md:py-20 bg-red-50 p-6 md:p-8 rounded-lg border border-red-200">
+              <h3 className="text-red-700 font-semibold text-base md:text-lg">Terjadi Kesalahan</h3>
+              <p className="text-red-600 text-sm md:text-base">{error}</p>
+            </div>
+          )}
+
+          {!loading && !error && (
+            <>
+              {/* Calendar and Selected Date - Mobile: Stack, Desktop: Side by side */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+                {/* Calendar */}
+                <div className="lg:col-span-2">
+                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                      <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+                        {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+                      </h2>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={previousMonth}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition"
+                        >
+                          <ChevronLeft className="w-5 h-5 text-gray-600" />
+                        </button>
+                        <button
+                          onClick={nextMonth}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition"
+                        >
+                          <ChevronRight className="w-5 h-5 text-gray-600" />
+                        </button>
                       </div>
-                      <h3 className="text-xl md:text-2xl font-bold text-gray-800">
-                        {selectedDate.getDate()} {monthNames[selectedDate.getMonth()]}
-                      </h3>
-                      <p className="text-xs md:text-sm text-gray-600">{selectedDate.getFullYear()}</p>
                     </div>
 
-                    <div className="space-y-3 max-h-[50vh] lg:max-h-[60vh] overflow-y-auto pr-2">
-                      <h4 className="font-semibold text-sm md:text-base text-gray-800 mb-3">
-                        {selectedScholarships.length} Beasiswa Deadline
-                      </h4>
-                      {selectedScholarships.map(scholarship => {
-                        const daysLeft = getDaysUntilDeadline(scholarship.deadline);
-                        const isUrgent = daysLeft <= 30 && daysLeft >= 0;
-                        
-                        return (
-                          <div key={scholarship.id} className="p-3 md:p-4 rounded-lg border border-gray-200 bg-white hover:shadow-md transition">
-                            <div className="flex items-start justify-between mb-2">
-                              <h5 className="font-bold text-gray-800 text-xs md:text-sm">{scholarship.title}</h5>
-                              {isUrgent && (
-                                <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full whitespace-nowrap ml-2">
-                                  Segera!
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-xs text-gray-600 mb-3">{scholarship.provider}</p>
-                            
-                            <div className="space-y-1.5">
-                              <div className="flex items-center gap-2">
-                                <BookOpen className="w-3 h-3 text-gray-500 flex-shrink-0" />
-                                <span className="text-xs text-gray-600">{scholarship.category}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <MapPin className="w-3 h-3 text-gray-500 flex-shrink-0" />
-                                <span className="text-xs text-gray-600">{scholarship.location}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <DollarSign className="w-3 h-3 text-gray-500 flex-shrink-0" />
-                                <span className="text-xs text-gray-600 font-semibold">{scholarship.amount}</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mt-3 pt-3 border-t border-gray-200">
-                              <p className={`text-xs font-semibold ${daysLeft < 0 ? 'text-gray-500' : isUrgent ? 'text-red-600' : 'text-green-600'}`}>
-                                {daysLeft >= 0 ? `${daysLeft} hari lagi` : 'Telah berakhir'}
-                              </p>
-                            </div>
-                            
-                            <a href={scholarship.path} className="block w-full text-center mt-3 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition">
-                              Lihat Detail
-                            </a>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-center py-8 md:py-12">
-                    <Calendar className="w-10 h-10 md:w-12 md:h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 text-xs md:text-sm">Pilih tanggal untuk melihat deadline beasiswa</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Upcoming Deadlines */}
-          <div>
-            <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Deadline Terdekat</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              {scholarships
-                .filter(s => getDaysUntilDeadline(s.deadline) >= 0)
-                .sort((a, b) => a.deadline.getTime() - b.deadline.getTime())
-                .slice(0, 4)
-                .map(scholarship => {
-                  const daysLeft = getDaysUntilDeadline(scholarship.deadline);
-                  const isUrgent = daysLeft <= 30;
-                  
-                  return (
-                    <div key={scholarship.id} className={`bg-white rounded-xl p-4 md:p-5 border-2 ${isUrgent ? 'border-red-200' : 'border-gray-200'} hover:shadow-lg transition`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className={`w-10 h-10 bg-gradient-to-r ${scholarship.color} rounded-lg flex items-center justify-center`}>
-                          <GraduationCap className="w-5 h-5 text-white" />
+                    {/* Day Names */}
+                    <div className="grid grid-cols-7 gap-1 md:gap-2 mb-2">
+                      {dayNames.map(day => (
+                        <div key={day} className="text-center text-xs md:text-sm font-semibold text-gray-600 p-1 md:p-2">
+                          {day}
                         </div>
-                        {isUrgent && (
-                          <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
-                            Segera!
-                          </span>
-                        )}
-                      </div>
-                      <h4 className="font-bold text-gray-800 mb-1 text-sm">{scholarship.title}</h4>
-                      <p className="text-xs text-gray-600 mb-3">{scholarship.provider}</p>
-                      <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
-                        <Calendar className="w-3 h-3 flex-shrink-0" />
-                        <span className="truncate">{formatDeadline(scholarship.deadline)}</span>
-                      </div>
-                      <p className={`text-sm font-bold ${isUrgent ? 'text-red-600' : 'text-green-600'}`}>
-                        {daysLeft} hari lagi
-                      </p>
+                      ))}
                     </div>
-                  );
-                })}
-            </div>
-          </div>
+
+                    {/* Calendar Grid */}
+                    <div className="grid grid-cols-7 gap-1 md:gap-2">
+                      {renderCalendarDays()}
+                    </div>
+
+                    {/* Legend */}
+                    <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
+                      <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm">
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-blue-500 rounded"></div>
+                          <span className="text-gray-600">Hari Ini</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 bg-blue-50 border border-blue-200 rounded"></div>
+                          <span className="text-gray-600">Ada Deadline</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 ring-2 ring-blue-500 bg-blue-100 rounded"></div>
+                          <span className="text-gray-600">Dipilih</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Selected Date Details */}
+                <div className="lg:col-span-1">
+                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 lg:sticky lg:top-8">
+                    {selectedDate ? (
+                      <>
+                        <div className="mb-4 md:mb-6">
+                          <div className="flex items-center gap-2 text-blue-600 mb-2">
+                            <Calendar className="w-5 h-5" />
+                            <span className="font-semibold text-sm md:text-base">Deadline Terpilih</span>
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-800">
+                            {selectedDate.getDate()} {monthNames[selectedDate.getMonth()]}
+                          </h3>
+                          <p className="text-xs md:text-sm text-gray-600">{selectedDate.getFullYear()}</p>
+                        </div>
+
+                        <div className="space-y-3 max-h-[50vh] lg:max-h-[60vh] overflow-y-auto pr-2">
+                          <h4 className="font-semibold text-sm md:text-base text-gray-800 mb-3">
+                            {selectedScholarships.length} Beasiswa Deadline
+                          </h4>
+                          {selectedScholarships.map(scholarship => {
+                            const daysLeft = getDaysUntilDeadline(scholarship.deadline);
+                            const isUrgent = daysLeft <= 30 && daysLeft >= 0;
+                            
+                            return (
+                              <div key={scholarship.id} className="p-3 md:p-4 rounded-lg border border-gray-200 bg-white hover:shadow-md transition">
+                                <div className="flex items-start justify-between mb-2">
+                                  <h5 className="font-bold text-gray-800 text-xs md:text-sm">{scholarship.title}</h5>
+                                  {isUrgent && (
+                                    <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full whitespace-nowrap ml-2">
+                                      Segera!
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-xs text-gray-600 mb-3">{scholarship.provider}</p>
+                                
+                                <div className="space-y-1.5">
+                                  <div className="flex items-center gap-2">
+                                    <BookOpen className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                                    <span className="text-xs text-gray-600">{scholarship.category}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <MapPin className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                                    <span className="text-xs text-gray-600">{scholarship.location}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <DollarSign className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                                    <span className="text-xs text-gray-600 font-semibold">{scholarship.amount}</span>
+                                  </div>
+                                </div>
+                                
+                                <div className="mt-3 pt-3 border-t border-gray-200">
+                                  <p className={`text-xs font-semibold ${daysLeft < 0 ? 'text-gray-500' : isUrgent ? 'text-red-600' : 'text-green-600'}`}>
+                                    {daysLeft >= 0 ? `${daysLeft} hari lagi` : 'Telah berakhir'}
+                                  </p>
+                                </div>
+                                
+                                <Link href={scholarship.path || '#'} target="_blank" rel="noopener noreferrer" className="block w-full text-center mt-3 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition">
+                                  Lihat Detail
+                                </Link>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-center py-8 md:py-12">
+                        <Calendar className="w-10 h-10 md:w-12 md:h-12 text-gray-300 mx-auto mb-3" />
+                        <p className="text-gray-500 text-xs md:text-sm">Pilih tanggal untuk melihat deadline beasiswa</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Upcoming Deadlines */}
+              <div>
+                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Deadline Terdekat</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                  {scholarships
+                    .filter(s => getDaysUntilDeadline(s.deadline) >= 0)
+                    .sort((a, b) => a.deadline.getTime() - b.deadline.getTime())
+                    .slice(0, 4)
+                    .map(scholarship => {
+                      const daysLeft = getDaysUntilDeadline(scholarship.deadline);
+                      const isUrgent = daysLeft <= 30;
+                      
+                      return (
+                        <div key={scholarship.id} className={`bg-white rounded-xl p-4 md:p-5 border-2 ${isUrgent ? 'border-red-200' : 'border-gray-200'} hover:shadow-lg transition`}>
+                          <div className="flex items-center justify-between mb-3">
+                            <div className={`w-10 h-10 bg-gradient-to-r ${scholarship.color} rounded-lg flex items-center justify-center`}>
+                              <GraduationCap className="w-5 h-5 text-white" />
+                            </div>
+                            {isUrgent && (
+                              <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
+                                Segera!
+                              </span>
+                            )}
+                          </div>
+                          <h4 className="font-bold text-gray-800 mb-1 text-sm">{scholarship.title}</h4>
+                          <p className="text-xs text-gray-600 mb-3">{scholarship.provider}</p>
+                          <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
+                            <Calendar className="w-3 h-3 flex-shrink-0" />
+                            <span className="truncate">{formatDeadline(scholarship.deadline)}</span>
+                          </div>
+                          <p className={`text-sm font-bold ${isUrgent ? 'text-red-600' : 'text-green-600'}`}>
+                            {daysLeft} hari lagi
+                          </p>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { BookOpen, Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
 
@@ -120,7 +120,7 @@ export default function ChatbotPage() {
 
         <nav className="space-y-2">
           <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <BookOpen className="w-5 h-5" />
+            <Home className="w-5 h-5" />
             Beranda
           </Link>
           <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
@@ -128,7 +128,7 @@ export default function ChatbotPage() {
             Cari Beasiswa
           </Link>
           <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
-            <Bell className="w-5 h-5" />
+            <NotebookText className="w-5 h-5" />
             Artikel
           </Link>
           <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
