@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { BookOpen, Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home } from 'lucide-react';
+import { BookOpen, Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
-import ReactMarkdown from "react-markdown";
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([
@@ -17,6 +16,7 @@ export default function ChatbotPage() {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickActions = [
@@ -34,11 +34,9 @@ export default function ChatbotPage() {
     scrollToBottom();
   }, [messages]);
 
-  // ✅ Correctly handle sending messages
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    // Add user message
     const userMessage = {
       id: messages.length + 1,
       type: 'user' as const,
@@ -109,11 +107,31 @@ export default function ChatbotPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-6 fixed h-full">
+      <aside className={`
+        w-64 bg-white border-r border-gray-200 p-6 fixed h-full z-50 transition-transform duration-300
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0
+      `}>
+        {/* Close Button (Mobile Only) */}
+        <button 
+          onClick={() => setSidebarOpen(false)}
+          className="absolute top-4 right-4 p-2 lg:hidden hover:bg-gray-100 rounded-lg"
+        >
+          <X className="w-5 h-5 text-gray-600" />
+        </button>
+
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-white" />
+            <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="font-bold text-xl text-gray-800">BeasiswaKu</span>
         </div>
@@ -121,23 +139,23 @@ export default function ChatbotPage() {
         <nav className="space-y-2">
           <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Home className="w-5 h-5" />
-            Beranda
+            <span>Beranda</span>
           </Link>
           <Link href="/cari-beasiswa" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Search className="w-5 h-5" />
-            Cari Beasiswa
+            <span>Cari Beasiswa</span>
           </Link>
           <Link href="/artikel" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <NotebookText className="w-5 h-5" />
-            Artikel
+            <span>Artikel</span>
           </Link>
           <Link href="/deadline" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg">
             <Calendar className="w-5 h-5" />
-            Deadline
+            <span>Deadline</span>
           </Link>
           <a href="#" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
             <User className="w-5 h-5" />
-            Beasiswa Bot (BEBOT)
+            <span>Beasiswa Bot (BEBOT)</span>
           </a>
         </nav>
 
@@ -150,17 +168,25 @@ export default function ChatbotPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-64 flex-1 flex flex-col h-screen">
+      <main className="flex-1 lg:ml-64 flex flex-col h-screen">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-8 py-4">
+        <div className="bg-white border-b border-gray-200 px-4 md:px-6 lg:px-8 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <Bot className="w-6 h-6 text-white" />
+            <div className="flex items-center gap-2 md:gap-3">
+              {/* Mobile Menu Button */}
+              <button 
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 lg:hidden hover:bg-gray-100 rounded-lg"
+              >
+                <Menu className="w-5 h-5 text-gray-600" />
+              </button>
+              
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <Bot className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800">BEBOT - Beasiswa Bot</h1>
-                <p className="text-sm text-gray-600 flex items-center gap-2">
+                <h1 className="text-base md:text-xl font-bold text-gray-800">BEBOT - Beasiswa Bot</h1>
+                <p className="text-xs md:text-sm text-gray-600 flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                   Online
                 </p>
@@ -168,51 +194,46 @@ export default function ChatbotPage() {
             </div>
             <button
               onClick={handleNewChat}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+              className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition text-sm md:text-base"
             >
-              <RefreshCw className="w-4 h-4" />
-              Chat Baru
+              <RefreshCw className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Chat Baru</span>
+              <span className="sm:hidden">Baru</span>
             </button>
           </div>
         </div>
 
         {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto px-8 py-6 bg-gray-50">
-          <div className="max-w-4xl mx-auto space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 bg-gray-50">
+          <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`flex gap-3 max-w-3xl ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className={`flex gap-2 md:gap-3 max-w-[85%] md:max-w-3xl ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                       message.type === 'bot'
                         ? 'bg-gradient-to-br from-blue-500 to-purple-600'
                         : 'bg-blue-600'
                     }`}
                   >
                     {message.type === 'bot' ? (
-                      <Bot className="w-5 h-5 text-white" />
+                      <Bot className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     ) : (
-                      <User className="w-5 h-5 text-white" />
+                      <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     )}
                   </div>
 
                   <div className={`flex flex-col ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
                     <div
-                      className={`rounded-2xl px-4 py-3 ${
+                      className={`rounded-2xl px-3 py-2 md:px-4 md:py-3 ${
                         message.type === 'bot'
                           ? 'bg-white border border-gray-200'
                           : 'bg-blue-600 text-white'
                       }`}
                     >
-                    <div
-                      className={`prose prose-sm max-w-none ${
-                        message.type === 'bot'
-                          ? 'text-gray-800 prose-p:my-1 prose-li:my-0 prose-strong:text-blue-700'
-                          : 'text-white'
-                      }`}
-                    >
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
-                    </div>
+                      <p className={`text-sm md:text-base ${message.type === 'bot' ? 'text-gray-800' : 'text-white'}`}>
+                        {message.content}
+                      </p>
                     </div>
                     <span className="text-xs text-gray-500 mt-1 px-2">
                       {message.timestamp.toLocaleTimeString('id-ID', {
@@ -238,11 +259,11 @@ export default function ChatbotPage() {
 
             {isTyping && (
               <div className="flex justify-start">
-                <div className="flex gap-3 max-w-3xl">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-5 h-5 text-white" />
+                <div className="flex gap-2 md:gap-3 max-w-[85%] md:max-w-3xl">
+                  <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-4 h-4 md:w-5 md:h-5 text-white" />
                   </div>
-                  <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
+                  <div className="bg-white border border-gray-200 rounded-2xl px-3 py-2 md:px-4 md:py-3">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                       <div
@@ -265,21 +286,21 @@ export default function ChatbotPage() {
 
         {/* Quick Actions */}
         {messages.length === 1 && (
-          <div className="px-8 py-4 bg-white border-t border-gray-200">
+          <div className="px-4 md:px-6 lg:px-8 py-3 md:py-4 bg-white border-t border-gray-200">
             <div className="max-w-4xl mx-auto">
-              <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
+              <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 flex items-center gap-2">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
                 Coba tanyakan:
               </p>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                 {quickActions.map((action) => (
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.text)}
-                    className="flex items-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition text-left"
+                    className="flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition text-left"
                   >
-                    <span className="text-2xl">{action.icon}</span>
-                    <span className="text-sm text-gray-800 font-medium">{action.text}</span>
+                    <span className="text-xl md:text-2xl">{action.icon}</span>
+                    <span className="text-xs md:text-sm text-gray-800 font-medium">{action.text}</span>
                   </button>
                 ))}
               </div>
@@ -288,9 +309,9 @@ export default function ChatbotPage() {
         )}
 
         {/* Input Area */}
-        <div className="bg-white border-t border-gray-200 px-8 py-4">
+        <div className="bg-white border-t border-gray-200 px-4 md:px-6 lg:px-8 py-3 md:py-4">
           <div className="max-w-4xl mx-auto">
-            <div className="flex gap-3 items-end">
+            <div className="flex gap-2 md:gap-3 items-end">
               <div className="flex-1 relative">
                 <textarea
                   value={inputMessage}
@@ -298,20 +319,20 @@ export default function ChatbotPage() {
                   onKeyPress={handleKeyPress}
                   placeholder="Ketik pertanyaan Anda disini..."
                   rows={1}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-800"
-                  style={{ minHeight: '48px', maxHeight: '120px' }}
+                  className="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-800 text-sm md:text-base"
+                  style={{ minHeight: '40px', maxHeight: '120px' }}
                 />
               </div>
               <button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim()}
-                className={`p-3 rounded-xl transition flex-shrink-0 ${
+                className={`p-2 md:p-3 rounded-xl transition flex-shrink-0 ${
                   inputMessage.trim()
                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2 text-center">
