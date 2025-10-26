@@ -6,16 +6,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '../../database/supabaseClient';
 
-interface BeasiswaDB {
-  id: number;
-  nama: string;
-  organizer: string;
-  deadline: string | null;
-  tipe: string;
-  lokasi: string;
-  path: string;
-  tingkat: string;
-}
 
 export default function Dashboard() {
   const [categoryCounts, setCategoryCounts] = useState({ S1: 0, S2: 0, S3: 0 });
