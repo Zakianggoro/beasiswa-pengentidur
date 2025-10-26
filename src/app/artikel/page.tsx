@@ -230,8 +230,8 @@ export default function ArtikelPage() {
               <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
                 <div className={`h-40 md:h-48 bg-gradient-to-r ${article.color} p-4 md:p-6 flex items-center justify-center relative overflow-hidden`}>
                   <Image 
-                    src={featuredArticle.imageUrl} 
-                    alt={featuredArticle.title}
+                    src={article.imageUrl} 
+                    alt={article.title}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
