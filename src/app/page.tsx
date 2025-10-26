@@ -53,25 +53,25 @@ export default function Dashboard() {
   const recommendations = [
     {
       title: "Tips Menulis Essay Beasiswa",
-      desc: "Panduan lengkap menulis essay yang menarik",
+      desc: "Panduan lengkap menulis essay yang menarik, coba cek artikel kami dan segera pelajari.",
       image: "📝",
       color: "bg-gradient-to-br from-yellow-400 to-orange-500"
     },
     {
       title: "Cara Memilih Beasiswa yang Tepat",
-      desc: "Strategi memilih beasiswa sesuai profil Anda",
+      desc: "Strategi memilih beasiswa sesuai profil Anda, coba cek artikel kami dan segera pelajari.",
       image: "🎯",
       color: "bg-gradient-to-br from-blue-400 to-blue-600"
     },
     {
       title: "Persiapan Interview Beasiswa",
-      desc: "Tips sukses menghadapi interview beasiswa",
+      desc: "Tips sukses menghadapi interview beasiswa, coba cek artikel kami dan segera pelajari.",
       image: "💼",
       color: "bg-gradient-to-br from-purple-400 to-pink-500"
     },
     {
       title: "Dokumen Beasiswa Lengkap",
-      desc: "Checklist dokumen yang perlu disiapkan",
+      desc: "Checklist dokumen yang perlu disiapkan, coba cek artikel kami dan segera pelajari.",
       image: "📋",
       color: "bg-gradient-to-br from-green-400 to-teal-500"
     }
