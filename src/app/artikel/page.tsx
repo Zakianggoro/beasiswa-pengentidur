@@ -203,7 +203,6 @@ export default function ArtikelPage() {
             </div>
           </div>
 
-          {/* Stats Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
             <div className="bg-white rounded-xl p-4 border border-gray-200">
               <div className="flex items-center gap-3">
@@ -218,7 +217,6 @@ export default function ArtikelPage() {
             </div>
           </div>
         
-          {/* Articles Grid */}
           <div className="mb-4">
             <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
               {selectedCategory === 'Semua' ? 'Semua Artikel' : `Artikel ${selectedCategory}`}
@@ -268,7 +266,6 @@ export default function ArtikelPage() {
             ))}
           </div>
 
-          {/* Load More Button */}
           {filteredArticles.length > 6 && (
             <div className="mt-6 md:mt-8 text-center">
               <button className="px-6 md:px-8 py-2.5 md:py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition text-sm md:text-base">
