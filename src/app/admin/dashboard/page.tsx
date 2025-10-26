@@ -10,6 +10,7 @@ import {
   Save,
   X,
   Menu,
+  Trash2,
 } from 'lucide-react';
 
 interface Beasiswa {
@@ -28,6 +29,7 @@ export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [activePanel, setActivePanel] = useState<'tambah' | 'hapus'>('tambah');
   const [formData, setFormData] = useState<Beasiswa>({
     nama: '',
     organizer: '',
@@ -39,7 +41,11 @@ export default function AdminDashboard() {
     tingkat: 'S1',
   });
 
-  // ✅ Session validation + countdown
+  // Beasiswa list management
+  const [beasiswaList, setBeasiswaList] = useState<(Beasiswa & { id: number })[]>([]);
+  const [search, setSearch] = useState('');
+
+  // Session validation + countdown
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isLoggedIn = localStorage.getItem('adminLoggedIn');
@@ -122,41 +128,35 @@ export default function AdminDashboard() {
     setTimeout(() => setSuccess(false), 3000);
   };
 
-  // Beasiswa list management
-    const [beasiswaList, setBeasiswaList] = useState<(Beasiswa & { id: number })[]>([]);
-    const [search, setSearch] = useState('');
-
-    // Fetch all data
-    const fetchBeasiswa = async () => {
+  // Fetch all data
+  const fetchBeasiswa = async () => {
     const { data, error } = await supabase.from('Beasiswa').select('*').order('created_at', { ascending: false });
     if (error) console.error('Error fetching data:', error.message);
     else setBeasiswaList(data || []);
-    };
+  };
 
-    // Delete beasiswa by ID
-    const handleDelete = async (id: number) => {
+  // Delete beasiswa by ID
+  const handleDelete = async (id: number) => {
     if (!confirm('Yakin ingin menghapus beasiswa ini?')) return;
 
     const { error } = await supabase.from('Beasiswa').delete().eq('id', id);
     if (error) {
-        console.error('Error deleting:', error.message);
-        return;
+      console.error('Error deleting:', error.message);
+      return;
     }
 
     setBeasiswaList((prev) => prev.filter((b) => b.id !== id));
     alert('Beasiswa berhasil dihapus!');
-    };
+  };
 
-    // Derived filtered list
-    const filteredBeasiswa = beasiswaList.filter((b) =>
+  const filteredBeasiswa = beasiswaList.filter((b) =>
     b.nama.toLowerCase().includes(search.toLowerCase()) ||
     b.organizer.toLowerCase().includes(search.toLowerCase())
-    );
+  );
 
-    // Fetch on mount
-    useEffect(() => {
+  useEffect(() => {
     fetchBeasiswa();
-    }, []);
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -187,10 +187,36 @@ export default function AdminDashboard() {
         </div>
 
         <nav className="space-y-2">
-          <div className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
+          <button
+            onClick={() => {
+              setActivePanel('tambah');
+              setSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition ${
+              activePanel === 'tambah'
+                ? 'bg-blue-50 text-blue-600'
+                : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
             <Plus className="w-5 h-5" />
             <span>Tambah Beasiswa</span>
-          </div>
+          </button>
+
+          <button
+            onClick={() => {
+              setActivePanel('hapus');
+              setSidebarOpen(false);
+              fetchBeasiswa();
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition ${
+              activePanel === 'hapus'
+                ? 'bg-red-50 text-red-600'
+                : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <Trash2 className="w-5 h-5" />
+            <span>Hapus Beasiswa</span>
+          </button>
         </nav>
 
         {/* Session Timer */}
@@ -230,119 +256,144 @@ export default function AdminDashboard() {
       <main className="flex-1 lg:ml-64">
         {/* Top Navbar for Mobile */}
         <div className="lg:hidden sticky top-0 z-30 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-            <button
+          <button
             onClick={() => setSidebarOpen(true)}
             className="p-2 hover:bg-gray-100 rounded-lg"
-            >
+          >
             <Menu className="w-6 h-6 text-gray-600" />
-            </button>
-            <div className="flex items-center gap-2">
+          </button>
+          <div className="flex items-center gap-2">
             <ShieldCheck className="w-6 h-6 text-blue-600" />
             <span className="font-bold text-lg text-gray-800">Admin</span>
-            </div>
-            <div className="text-sm font-semibold text-red-600">
+          </div>
+          <div className="text-sm font-semibold text-red-600">
             {formatTime(timeLeft)}
-            </div>
+          </div>
         </div>
 
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-6 flex items-center justify-between flex-wrap gap-3">
-            <div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-1">
-                Tambah / Hapus Beasiswa
-            </h1>
-            <p className="text-gray-600">
-                Tambahkan atau hapus data beasiswa dari database
-            </p>
+        {activePanel === 'tambah' ? (
+          <>
+            {/* Header */}
+            <div className="bg-white border-b border-gray-200 px-6 py-6">
+              <h1 className="text-2xl font-bold text-gray-800 mb-1">
+                Tambah Beasiswa
+              </h1>
+              <p className="text-gray-600">
+                Tambahkan data beasiswa baru ke database
+              </p>
             </div>
-            <button
-            onClick={fetchBeasiswa}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
-            >
-            <Clock className="w-4 h-4" />
-            Refresh Data
-            </button>
-        </div>
 
-        {/* Success Message */}
-        {success && (
-            <div className="mx-6 mt-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center text-green-700 font-semibold">
-            ✅ Beasiswa berhasil ditambahkan!
-            </div>
-        )}
-
-        {/* Add Beasiswa Form */}
-        <div className="p-6">
-            <div className="bg-white rounded-xl p-6 border border-gray-200 max-w-3xl mx-auto">
-            <div className="space-y-6">
-                <Input label="Nama Beasiswa" name="nama" value={formData.nama} onChange={handleChange} />
-                <Input label="Penyelenggara" name="organizer" value={formData.organizer} onChange={handleChange} />
-
-                <div className="grid md:grid-cols-2 gap-6">
-                <Select label="Tingkat" name="tingkat" value={formData.tingkat} onChange={handleChange} options={['S1', 'S2', 'S3']} />
-                <Select label="Tipe Beasiswa" name="tipe" value={formData.tipe} onChange={handleChange} options={['Full Funded', 'Partial', 'Tuition Only']} />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                <Input type="date" label="Deadline" name="deadline" value={formData.deadline} onChange={handleChange} />
-                <Input label="Lokasi" name="lokasi" value={formData.lokasi} onChange={handleChange} />
-                </div>
-
-                <Input label="Link / Path" name="path" value={formData.path} onChange={handleChange} />
-                <Textarea label="Deskripsi" name="deskripsi" value={formData.deskripsi} onChange={handleChange} />
-
-                <button
-                onClick={handleSubmit}
-                disabled={saving}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
-                >
-                <Save className="w-5 h-5" />
-                {saving ? 'Menyimpan...' : 'Simpan Beasiswa'}
-                </button>
-            </div>
-            </div>
-        </div>
-
-        {/* Delete Section */}
-        <div className="px-6 pb-10">
-            <div className="bg-white rounded-xl p-6 border border-gray-200 max-w-5xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Hapus Beasiswa</h2>
-
-            <input
-                type="text"
-                placeholder="Cari beasiswa..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full mb-4 px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            {filteredBeasiswa.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">Tidak ada beasiswa ditemukan.</p>
-            ) : (
-                <ul className="divide-y divide-gray-200">
-                {filteredBeasiswa.map((b) => (
-                    <li
-                    key={b.id}
-                    className="flex items-center justify-between py-3 px-2 hover:bg-gray-50 transition"
-                    >
-                    <div>
-                        <p className="font-semibold text-gray-800">{b.nama}</p>
-                        <p className="text-sm text-gray-600">{b.organizer}</p>
-                    </div>
-                    <button
-                        onClick={() => handleDelete(b.id)}
-                        className="flex items-center gap-2 px-3 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition"
-                    >
-                        <X className="w-4 h-4" />
-                        Hapus
-                    </button>
-                    </li>
-                ))}
-                </ul>
+            {/* Success Message */}
+            {success && (
+              <div className="mx-6 mt-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center text-green-700 font-semibold">
+                ✅ Beasiswa berhasil ditambahkan!
+              </div>
             )}
+
+            {/* Add Beasiswa Form */}
+            <div className="p-6">
+              <div className="bg-white rounded-xl p-6 border border-gray-200 max-w-3xl mx-auto">
+                <div className="space-y-6">
+                  <Input label="Nama Beasiswa" name="nama" value={formData.nama} onChange={handleChange} />
+                  <Input label="Penyelenggara" name="organizer" value={formData.organizer} onChange={handleChange} />
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Select label="Tingkat" name="tingkat" value={formData.tingkat} onChange={handleChange} options={['S1', 'S2', 'S3']} />
+                    <Select label="Tipe Beasiswa" name="tipe" value={formData.tipe} onChange={handleChange} options={['Full Funded', 'Partial', 'Tuition Only']} />
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Input type="date" label="Deadline" name="deadline" value={formData.deadline} onChange={handleChange} />
+                    <Input label="Lokasi" name="lokasi" value={formData.lokasi} onChange={handleChange} />
+                  </div>
+
+                  <Input label="Link / Path" name="path" value={formData.path} onChange={handleChange} />
+                  <Textarea label="Deskripsi" name="deskripsi" value={formData.deskripsi} onChange={handleChange} />
+
+                  <button
+                    onClick={handleSubmit}
+                    disabled={saving}
+                    className="w-full flex items-center justify-center gap-2 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                  >
+                    <Save className="w-5 h-5" />
+                    {saving ? 'Menyimpan...' : 'Simpan Beasiswa'}
+                  </button>
+                </div>
+              </div>
             </div>
-        </div>
-        </main>
+          </>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="bg-white border-b border-gray-200 px-6 py-6 flex items-center justify-between flex-wrap gap-3">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800 mb-1">
+                  Hapus Beasiswa
+                </h1>
+                <p className="text-gray-600">
+                  Kelola dan hapus data beasiswa dari database
+                </p>
+              </div>
+              <button
+                onClick={fetchBeasiswa}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
+              >
+                <Clock className="w-4 h-4" />
+                Refresh Data
+              </button>
+            </div>
+
+            {/* Delete Section */}
+            <div className="p-6">
+              <div className="bg-white rounded-xl p-6 border border-gray-200 max-w-5xl mx-auto">
+                <input
+                  type="text"
+                  placeholder="Cari beasiswa berdasarkan nama atau penyelenggara..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full mb-6 px-4 py-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+
+                {filteredBeasiswa.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">
+                    {search ? 'Tidak ada beasiswa yang cocok dengan pencarian.' : 'Tidak ada beasiswa ditemukan.'}
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {filteredBeasiswa.map((b) => (
+                      <div
+                        key={b.id}
+                        className="flex items-center justify-between py-4 px-4 hover:bg-gray-50 transition rounded-lg border border-gray-100"
+                      >
+                        <div className="flex-1">
+                          <p className="font-semibold text-gray-800">{b.nama}</p>
+                          <p className="text-sm text-gray-600">{b.organizer}</p>
+                          <div className="flex gap-3 mt-1 text-xs text-gray-500">
+                            <span>📍 {b.lokasi}</span>
+                            <span>📅 {b.deadline}</span>
+                            <span>🎓 {b.tingkat}</span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleDelete(b.id)}
+                          className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition font-medium"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Hapus
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-6 pt-4 border-t border-gray-200 text-sm text-gray-600 text-center">
+                  Total: {filteredBeasiswa.length} beasiswa
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </main>
     </div>
   );
 }

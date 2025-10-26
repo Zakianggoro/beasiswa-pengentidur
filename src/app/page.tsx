@@ -81,7 +81,6 @@ export default function Dashboard() {
     async function fetchCategoryCounts() {
       setLoading(true);
       try {
-        // Simulating API call - replace with actual Supabase call
         await new Promise(resolve => setTimeout(resolve, 1000));
         setCategoryCounts({
           S1: 45,
@@ -190,18 +189,6 @@ export default function Dashboard() {
           <header className="mb-6 md:mb-8">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Temukan Beasiswa Impianmu</h1>
             <p className="text-gray-600 mt-1 text-sm md:text-base">Jelajahi ribuan peluang beasiswa untuk masa depan cerah</p>
-            
-            {/* Search Bar - Hidden on mobile, shown on tablet+ */}
-            <div className="hidden md:flex items-center gap-4 mt-4">
-              <div className="relative flex-1 max-w-md">
-                <input
-                  type="text"
-                  placeholder="Cari beasiswa..."
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
-              </div>
-            </div>
           </header>
 
           {/* Hero Banner */}
@@ -266,7 +253,6 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {featuredScholarships.map((scholarship) => (
                 <div key={scholarship.id} className="bg-white rounded-xl overflow-hidden hover:shadow-xl transition border border-gray-200 group">
-                  {/* Image Header - replaced gradient with actual image */}
                   <div className="relative h-40 md:h-48 overflow-hidden bg-gray-200">
                     <Image 
                       src={scholarship.imageUrl} 
