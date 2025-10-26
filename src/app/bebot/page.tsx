@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
+import ReactMarkdown from "react-markdown";
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([
@@ -231,9 +232,13 @@ export default function ChatbotPage() {
                           : 'bg-blue-600 text-white'
                       }`}
                     >
-                      <p className={`text-sm md:text-base ${message.type === 'bot' ? 'text-gray-800' : 'text-white'}`}>
-                        {message.content}
-                      </p>
+                      <div className={`prose prose-sm md:prose-base max-w-none ${message.type === 'bot' ? 'text-gray-800' : 'text-white'}`}>
+                        {message.type === 'bot' ? (
+                          <ReactMarkdown>{message.content}</ReactMarkdown>
+                        ) : (
+                          <p>{message.content}</p>
+                        )}
+                      </div>
                     </div>
                     <span className="text-xs text-gray-500 mt-1 px-2">
                       {message.timestamp.toLocaleTimeString('id-ID', {
