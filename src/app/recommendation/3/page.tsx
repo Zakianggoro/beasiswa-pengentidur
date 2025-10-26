@@ -306,7 +306,7 @@ export default function BeasiswaDetailPage() {
                   <ul className="space-y-2 ml-6">
                     <li className="text-gray-700 text-sm">• Lampirkan sertifikat lomba, karya tulis, publikasi ilmiah</li>
                     <li className="text-gray-700 text-sm">• Dokumentasikan kegiatan sosial yang menunjukkan kepedulian terhadap masyarakat</li>
-                    <li className="text-gray-700 text-sm">• Program ini mencari "change maker" — bukan hanya mahasiswa pintar, tapi juga yang berdampak</li>
+                    <li className="text-gray-700 text-sm">• Program ini mencari change maker — bukan hanya mahasiswa pintar, tapi juga yang berdampak</li>
                   </ul>
                 </div>
 
@@ -355,7 +355,7 @@ export default function BeasiswaDetailPage() {
               </div>
 
               <p className="text-gray-700 leading-relaxed mb-6">
-                Beasiswa Unggulan termasuk salah satu beasiswa paling kompetitif di Indonesia. Setiap tahunnya, ribuan pelamar bersaing untuk mendapatkan slot yang terbatas. Tingkat kesulitannya dapat dikategorikan sebagai <span className="font-bold text-red-600">"menengah ke tinggi"</span>, tergantung pada jenjang pendidikan dan kualitas kandidat lainnya.
+                Beasiswa Unggulan termasuk salah satu beasiswa paling kompetitif di Indonesia. Setiap tahunnya, ribuan pelamar bersaing untuk mendapatkan slot yang terbatas. Tingkat kesulitannya dapat dikategorikan sebagai <span className="font-bold text-red-600">menengah ke tinggi</span>, tergantung pada jenjang pendidikan dan kualitas kandidat lainnya.
               </p>
 
               <div className="grid md:grid-cols-3 gap-4 mb-6">
