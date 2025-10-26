@@ -349,9 +349,9 @@ export default function ArtikelReadPage() {
                       <p className="text-xs md:text-sm text-white/90 mb-3 md:mb-4">
                         Gunakan tips ini sebagai panduan dan mulai draft essay Anda hari ini. Semakin cepat Anda mulai, semakin banyak waktu untuk revisi dan penyempurnaan!
                       </p>
-                      <button className="px-4 md:px-6 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition text-sm md:text-base">
+                      <Link href="/cari-beasiswa" className="px-4 md:px-6 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition text-sm md:text-base">
                         Cari Beasiswa Sekarang
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
