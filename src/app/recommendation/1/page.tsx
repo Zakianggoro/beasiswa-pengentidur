@@ -295,12 +295,6 @@ export default function BeasiswaDetailPage() {
                       <p className="font-semibold text-gray-800 text-sm md:text-base">{beasiswaDetail.location}</p>
                     </div>
                   </div>
-
-                  <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                    <button className="w-full py-2.5 md:py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition text-sm md:text-base">
-                      Lihat Persyaratan Lengkap
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
