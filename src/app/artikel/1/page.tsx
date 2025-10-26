@@ -18,7 +18,6 @@ export default function ArtikelReadPage() {
       )}
 
       {/* Sidebar */}
-      <div className="hidden lg:block lg:col-span-1">
       <aside className={`
         w-64 bg-white border-r border-gray-200 p-6 fixed h-full z-50 transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -69,7 +68,6 @@ export default function ArtikelReadPage() {
           </div>
         </div>
       </aside>
-      </div>
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
