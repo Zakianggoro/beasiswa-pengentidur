@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState } from 'react';
-import { BookOpen, Search, Bell, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
+import { BookOpen, Search, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ArtikelPage() {
   const [selectedCategory, setSelectedCategory] = useState('Semua');
@@ -142,10 +143,12 @@ export default function ArtikelPage() {
 
           {/* Featured Article */}
           <div className="relative rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 h-64 md:h-80 lg:h-96">
-            <img 
+            <Image 
               src={featuredArticle.imageUrl} 
               alt={featuredArticle.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div className="absolute inset-0 p-4 md:p-6 lg:p-8 flex items-center">
@@ -226,10 +229,12 @@ export default function ArtikelPage() {
             {filteredArticles.slice(1).map(article => (
               <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
                 <div className={`h-40 md:h-48 bg-gradient-to-r ${article.color} p-4 md:p-6 flex items-center justify-center relative overflow-hidden`}>
-                  <img
-                    src={article.imageUrl}
-                    alt={article.title}
-                    className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                  <Image 
+                    src={featuredArticle.imageUrl} 
+                    alt={featuredArticle.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 md:top-4 right-3 md:right-4">
                     <span className="px-2 md:px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">

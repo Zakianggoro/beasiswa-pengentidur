@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, User, BookOpen, GraduationCap, Calendar, MapPin, DollarSign, Home, NotebookText, Filter, Menu, X } from 'lucide-react';
+import { Search, User, BookOpen, GraduationCap, Calendar, MapPin, Home, NotebookText, Filter, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { supabase } from '../../../database/supabaseClient';
 

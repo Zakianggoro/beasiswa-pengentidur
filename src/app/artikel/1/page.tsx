@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { BookOpen, Search, Calendar, User, Clock, ArrowLeft, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
+import {Search, Calendar, User, Clock, ArrowLeft, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ArtikelReadPage() {

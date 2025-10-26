@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { BookOpen, Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home, Menu, X, GraduationCap } from 'lucide-react';
+import {Search, Calendar, User, Send, Bot, Sparkles, RefreshCw, ThumbsUp, ThumbsDown, NotebookText, Home, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ChatbotPage() {
