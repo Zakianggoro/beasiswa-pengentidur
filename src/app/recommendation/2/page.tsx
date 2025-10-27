@@ -8,11 +8,11 @@ export default function BeasiswaDetailPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const beasiswaDetail = {
-    name: "Beasiswa Unggulan Kemendikbud 2025",
-    organizer: "Kementerian Pendidikan",
-    deadline: "2025-12-31",
+    name: "LPDP Scholarship Program",
+    organizer: "LPDP Indonesia",
+    deadline: "15 Januari 2026",
     type: "Full Funded",
-    location: "Indonesia",
+    location: "Global",
     description: "Beasiswa Unggulan adalah program beasiswa yang diberikan oleh Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia untuk mahasiswa berprestasi. Program ini bertujuan untuk meningkatkan kualitas sumber daya manusia Indonesia melalui pendidikan tinggi berkualitas.\n\nBeasiswa ini mencakup biaya pendidikan penuh dan biaya hidup selama masa studi. Penerima beasiswa akan mendapatkan dukungan finansial yang komprehensif untuk fokus pada pencapaian akademik mereka.\n\nProgram ini terbuka untuk mahasiswa yang ingin melanjutkan studi di dalam negeri maupun luar negeri dengan berbagai pilihan bidang studi yang tersedia."
   };
 
