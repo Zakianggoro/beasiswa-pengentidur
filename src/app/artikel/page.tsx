@@ -1,11 +1,57 @@
 'use client'
 
-import React from 'react';
-import { BookOpen, Search, Calendar, User, Clock, ArrowLeft, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, Search, Calendar, User, Clock, ArrowRight, Tag, Home, NotebookText, Menu, X, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-export default function ArtikelInterviewPage() {
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+export default function ArtikelPage() {
+  const [selectedCategory, setSelectedCategory] = useState('Semua');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const categories = ['Semua', 'Tips Essay', 'Interview', 'Dokumen', 'Motivasi', 'Strategi'];
+
+  const articles = [
+    {
+      id: 1,
+      title: "10 Tips Menulis Essay Beasiswa yang Menarik Perhatian Reviewer",
+      excerpt: "Essay adalah salah satu komponen terpenting dalam aplikasi beasiswa. Pelajari cara menulis essay yang powerful dan memorable untuk meningkatkan peluang Anda diterima.",
+      category: "Tips Essay",
+      readTime: "8 menit",
+      date: "15 Oktober 2025",
+      image: "📝",
+      imageUrl: "/components/placeholder/image1.jpg",
+      color: "from-yellow-400 to-orange-500"
+    },
+    {
+      id: 2,
+      title: "Cara Mempersiapkan Interview Beasiswa: Dari Riset hingga Follow-up",
+      excerpt: "Interview adalah tahap krusial yang menentukan. Temukan strategi lengkap untuk mempersiapkan diri menghadapi interview beasiswa, mulai dari riset hingga tips menjawab pertanyaan sulit.",
+      category: "Interview",
+      readTime: "10 menit",
+      date: "12 Oktober 2025",
+      image: "💼",
+      imageUrl: "/components/placeholder/image2.jpg",
+      color: "from-purple-400 to-pink-500"
+    },
+    {
+      id: 3,
+      title: "Checklist Dokumen Beasiswa Lengkap: Jangan Sampai Ada yang Terlewat",
+      excerpt: "Dokumen yang tidak lengkap bisa membuat aplikasi Anda ditolak. Gunakan checklist ini untuk memastikan semua dokumen yang dibutuhkan sudah disiapkan dengan baik.",
+      category: "Dokumen",
+      readTime: "6 menit",
+      date: "10 Oktober 2025",
+      image: "📋",
+      imageUrl: "/components/placeholder/image3.jpg",
+      color: "from-green-400 to-teal-500"
+    }
+  ];
+
+  const filteredArticles = selectedCategory === 'Semua' 
+    ? articles 
+    : articles.filter(article => article.category === selectedCategory);
+
+  const featuredArticle = articles[0];
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -64,7 +110,7 @@ export default function ArtikelInterviewPage() {
         <div className="absolute bottom-6 left-6 right-6">
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-4 text-white">
             <p className="text-sm font-semibold mb-1">💡 Tips Hari Ini</p>
-            <p className="text-xs opacity-90">Siapkan diri sebelum interview dimulai!</p>
+            <p className="text-xs opacity-90">Mulai persiapan dokumen beasiswa dari sekarang!</p>
           </div>
         </div>
       </aside>
@@ -88,305 +134,145 @@ export default function ArtikelInterviewPage() {
           <div className="w-10"></div>
         </div>
 
-        {/* Back Button */}
-        <div className="bg-white border-b border-gray-200 px-4 md:px-8 py-4">
-          <Link href="/artikel" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
-            <ArrowLeft className="w-5 h-5" />
-            Kembali ke Artikel
-          </Link>
-        </div>
+        <div className="p-4 md:p-6 lg:p-8">
+          {/* Header */}
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Artikel & Tips Beasiswa</h1>
+            <p className="text-gray-600 text-sm md:text-base">Pelajari tips dan strategi untuk meningkatkan peluang mendapatkan beasiswa</p>
+          </div>
 
-        {/* Header Section with Background Image */}
-        <div
-          className="relative px-4 md:px-8 py-12 md:py-16 text-white overflow-hidden"
-          style={{
-            backgroundImage: "url('/components/placeholder/image2.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          {/* Overlay for readability */}
-          <div className="absolute inset-0 bg-black/50" />
-
-          <div className="relative z-10 max-w-4xl mx-auto">
-            <div className="flex items-center gap-3 mb-4 flex-wrap">
-              <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">
-                Persiapan Beasiswa
-              </span>
-              <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold">
-                💼 Panduan Lengkap
-              </span>
-            </div>
-            <h1 className="text-2xl md:text-4xl font-bold mb-4">
-              Cara Mempersiapkan Interview Beasiswa: Dari Riset hingga Follow-up
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-white/90 text-sm md:text-base">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 md:w-5 md:h-5" />
-                <span>10 menit baca</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 md:w-5 md:h-5" />
-                <span>18 Oktober 2025</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4 md:w-5 md:h-5" />
-                <span>Tim BeasiswaKu</span>
+          {/* Featured Article */}
+          <div className="relative rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 h-64 md:h-80 lg:h-96">
+            <Image 
+              src={featuredArticle.imageUrl} 
+              alt={featuredArticle.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            <div className="absolute inset-0 p-4 md:p-6 lg:p-8 flex items-center">
+              <div className="relative z-10 max-w-3xl text-white">
+                <div className="mb-3">
+                  <span className="px-3 py-1 bg-white text-gray-800 text-xs font-semibold rounded-full">
+                    ⭐ Artikel Unggulan
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mb-2 md:mb-3">
+                  <Tag className="w-3 h-3 md:w-4 md:h-4" />
+                  <span className="text-xs md:text-sm font-semibold">{featuredArticle.category}</span>
+                </div>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">{featuredArticle.title}</h2>
+                <p className="hidden md:block text-white/90 mb-4 md:mb-6 text-sm md:text-base lg:text-lg">
+                  {featuredArticle.excerpt}
+                </p>
+                <div className="flex items-center gap-3 md:gap-6 mb-4 md:mb-6 text-xs md:text-sm">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                    <span>{featuredArticle.readTime} baca</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                    <span>{featuredArticle.date}</span>
+                  </div>
+                </div>
+                <Link href={`/artikel/${featuredArticle.id}`} className="px-4 md:px-6 py-2 md:py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 inline-flex text-sm md:text-base">
+                  Baca Artikel
+                  <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+                </Link>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Article Content */}
-        <div className="px-4 md:px-8 py-8 md:py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-              {/* Main Article */}
-              <div className="lg:col-span-2">
-                <div className="bg-white rounded-xl p-4 md:p-8 border border-gray-200 mb-6">
-                  {/* Introduction */}
-                  <div className="prose prose-lg max-w-none mb-8">
-                    <p className="text-gray-700 leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                    </p>
-                    <p className="text-gray-700 leading-relaxed">
-                      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p className="text-gray-700 leading-relaxed">
-                      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                    </p>
-                  </div>
+          {/* Category Filter */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-medium transition text-sm md:text-base ${
+                    selectedCategory === category
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
 
-                  {/* Tips Section */}
-                  <div className="space-y-8">
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">1</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Lorem Ipsum Dolor Sit Amet</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                          </p>
-                          <p className="text-gray-700 leading-relaxed">
-                            Quis nostrud exercitation ullamco laboris:
-                          </p>
-                          <ul className="list-disc ml-5 text-gray-700 leading-relaxed">
-                            <li>Nisi ut aliquip ex ea commodo consequat</li>
-                            <li>Duis aute irure dolor in reprehenderit</li>
-                            <li>Voluptate velit esse cillum dolore</li>
-                          </ul>
-                          <p className="text-gray-700 leading-relaxed">
-                            💡 Contoh:
-                          </p>
-                          <p className="text-gray-700 leading-relaxed">
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">2</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Nemo Enim Ipsam Voluptatem</h2>
-                          <p className="text-gray-700 leading-relaxed mb-3">
-                            Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                          </p>
-                          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
-                            <p className="text-sm text-gray-700 italic">
-                              <strong>Contoh:</strong><br/>
-                              Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">3</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Ut Labore et Dolore Magnam</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">4</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Quis Autem Vel Eum Iure</h2>
-                          <p className="text-gray-700 leading-relaxed mb-3">
-                            Reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
-                          </p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-red-50 border border-red-200 p-4 rounded">
-                              <p className="text-xs font-semibold text-red-700 mb-2">❌ JANGAN:</p>
-                              <p className="text-sm text-gray-700">At vero eos et accusamus et iusto odio.</p>
-                            </div>
-                            <div className="bg-green-50 border border-green-200 p-4 rounded">
-                              <p className="text-xs font-semibold text-green-700 mb-2">✅ LAKUKAN:</p>
-                              <p className="text-sm text-gray-700">Dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">5</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Deleniti Atque Corrupti</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">6</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Temporibus Autem Quibusdam</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">7</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Itaque Earum Rerum Hic</h2>
-                          <p className="text-gray-700 leading-relaxed mb-3">
-                            Tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
-                          </p>
-                          <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                            <li><strong>Nam libero tempore:</strong> Cum soluta nobis est eligendi optio</li>
-                            <li><strong>Cumque nihil impedit:</strong> Quo minus id quod maxime placeat</li>
-                            <li><strong>Facere possimus:</strong> Omnis voluptas assumenda est</li>
-                            <li><strong>Omnis dolor:</strong> Repellendus temporibus autem quibusdam</li>
-                            <li><strong>Et aut officiis:</strong> Debitis aut rerum necessitatibus</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">8</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Hanc Ego Cum Teneam</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Sentiam quid idem sentiant? An nisi populari fama? Sine molestia? Itaque hoc frequenter dici solet a vobis, non intellegere nos.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">9</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Sed Ut Perspiciatis Unde</h2>
-                          <p className="text-gray-700 leading-relaxed mb-3">
-                            Omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.
-                          </p>
-                          <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
-                            <p className="text-sm text-gray-700">
-                              <strong>💡 Pro Tip:</strong> Quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold">10</span>
-                        </div>
-                        <div>
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Neque Porro Quisquam Est</h2>
-                          <p className="text-gray-700 leading-relaxed">
-                            Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Conclusion */}
-                  <div className="mt-8 pt-8 border-t border-gray-200">
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">Kesimpulan</h2>
-                    <p className="text-gray-700 leading-relaxed mb-4">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <p className="text-gray-700 leading-relaxed">
-                      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <div className="mt-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 text-white">
-                      <p className="font-semibold mb-2">🚀 Lorem Ipsum Dolor Sit Amet?</p>
-                      <p className="text-sm text-white/90 mb-4">
-                        Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam!
-                      </p>
-                      <button className="px-6 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition">
-                        Cari Beasiswa Sekarang
-                      </button>
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
+            <div className="bg-white rounded-xl p-4 border border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-blue-600" />
                 </div>
-              </div>
-
-              {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <div className="lg:sticky lg:top-8 space-y-6">
-                  {/* Table of Contents */}
-                  <div className="bg-white rounded-xl p-6 border border-gray-200">
-                    <h3 className="font-bold text-gray-800 mb-4">Daftar Isi</h3>
-                    <nav className="space-y-2">
-                      <p className="block text-sm text-gray-600">1. Lorem Ipsum Dolor Sit Amet</p>
-                      <p className="block text-sm text-gray-600">2. Nemo Enim Ipsam Voluptatem</p>
-                      <p className="block text-sm text-gray-600">3. Ut Labore et Dolore Magnam</p>
-                      <p className="block text-sm text-gray-600">4. Quis Autem Vel Eum Iure</p>
-                      <p className="block text-sm text-gray-600">5. Deleniti Atque Corrupti</p>
-                      <p className="block text-sm text-gray-600">6. Temporibus Autem Quibusdam</p>
-                      <p className="block text-sm text-gray-600">7. Itaque Earum Rerum Hic</p>
-                      <p className="block text-sm text-gray-600">8. Hanc Ego Cum Teneam</p>
-                      <p className="block text-sm text-gray-600">9. Sed Ut Perspiciatis Unde</p>
-                      <p className="block text-sm text-gray-600">10. Neque Porro Quisquam Est</p>
-                    </nav>
-                  </div>
+                <div>
+                  <p className="text-xl md:text-2xl font-bold text-gray-800">{articles.length}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Total Artikel</p>
                 </div>
               </div>
             </div>
           </div>
+        
+          <div className="mb-4">
+            <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
+              {selectedCategory === 'Semua' ? 'Semua Artikel' : `Artikel ${selectedCategory}`}
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {filteredArticles.slice(1).map(article => (
+              <div key={article.id} className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition group">
+                <div className={`h-40 md:h-48 bg-gradient-to-r ${article.color} p-4 md:p-6 flex items-center justify-center relative overflow-hidden`}>
+                  <Image 
+                    src={article.imageUrl} 
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute top-3 md:top-4 right-3 md:right-4">
+                    <span className="px-2 md:px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4 md:p-6">
+                  <h4 className="font-bold text-base md:text-lg text-gray-800 mb-2 group-hover:text-blue-600 transition">
+                    {article.title}
+                  </h4>
+                  <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-3 md:mb-4">
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                      <span>{article.readTime}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                      <span>{article.date}</span>
+                    </div>
+                  </div>
+                  <Link href={`/artikel/${article.id}`} className="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 text-sm md:text-base">
+                    Baca Selengkapnya
+                    <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredArticles.length > 6 && (
+            <div className="mt-6 md:mt-8 text-center">
+              <button className="px-6 md:px-8 py-2.5 md:py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition text-sm md:text-base">
+                Muat Lebih Banyak Artikel
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </div>
