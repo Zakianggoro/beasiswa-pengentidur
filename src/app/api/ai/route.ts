@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
-
+console.log("KEY CHECK:", process.env.GEMINI_API_KEY ? "Terbaca ✅" : "Kosong ❌");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
