@@ -15,18 +15,22 @@ export interface Beasiswa {
   tingkat: string;
 }
 
-// State RxJS untuk menampung data beasiswa hasil fetch
+// [REACTIVE] BehaviorSubject sebagai state reaktif aplikasi
+// Menyimpan nilai terkini dan otomatis dikirim ke semua subscriber saat berubah
 export const scholarships$ = new BehaviorSubject<Beasiswa[]>([]);
 export const isBeasiswaLoading$ = new BehaviorSubject<boolean>(false);
 export const beasiswaError$ = new BehaviorSubject<string | null>(null);
 
-// Trigger Subject untuk memicu fetch data
+// [REACTIVE] Subject sebagai trigger/tombol pemicu fetch data
+// Saat .next() dipanggil, seluruh pipeline di bawah langsung berjalan
 const triggerFetch$ = new Subject<void>();
 
 triggerFetch$.pipe(
+  // [REACTIVE] tap() - efek samping: set loading true tanpa mengubah stream
   // 1. Set status loading menjadi true saat fetch dimulai
   tap(() => isBeasiswaLoading$.next(true)),
   
+  // [REACTIVE] switchMap() - konversi Promise Supabase ke Observable
   // 2. Mengubah Promise Supabase menjadi Observable RxJS
   switchMap(() => 
     from(
@@ -37,6 +41,7 @@ triggerFetch$.pipe(
   ),
   
   // 3. Tangani hasil data yang didapat dari database
+  // [REACTIVE] tap() - proses hasil fetch: matikan loading, kirim data/error ke stream
   tap(({ data, error }) => {
     isBeasiswaLoading$.next(false);
     if (error) {
@@ -48,13 +53,14 @@ triggerFetch$.pipe(
   }),
   
   // 4. Mencegah stream putus total jika terjadi error network/database fatal
+   // [REACTIVE] catchError() - tangkap error fatal agar stream tidak putus/crash
   catchError((err) => {
     isBeasiswaLoading$.next(false);
     beasiswaError$.next('Gagal terhubung ke server database.');
     console.error(err);
     return from([]);
   })
-).subscribe();
+).subscribe(); // [REACTIVE] Mengaktifkan pipeline agar mulai "mendengarkan"
 
 // Helper untuk memformat data dengan aman agar tidak ada yang bernilai null/undefined
 function setScholarshipsData(data: any[]) {

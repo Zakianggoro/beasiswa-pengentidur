@@ -38,16 +38,23 @@ function CariBeasiswaContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1. Berlangganan (Subscribe) ke data stream dari RxJS Service
+    // 1. [REACTIVE] Berlangganan (Subscribe) ke data stream dari RxJS Service
+      // UI otomatis update setiap kali scholarships$ emit nilai baru
     const subData = scholarships$.subscribe(data => setScholarships(data));
+
+     // [REACTIVE] Subscribe ke stream status loading
     const subLoading = isBeasiswaLoading$.subscribe(status => setLoading(status));
+
+    // [REACTIVE] Subscribe ke stream pesan error
     const subError = beasiswaError$.subscribe(msg => setError(msg));
 
     // 2. Jalankan fungsi untuk memicu penarikan data dari database
+     // Memicu triggerFetch$.next() → menjalankan pipeline reaktif
     loadAllScholarships();
 
     // 3. Bersihkan subscription saat komponen unmount agar tidak kebocoran memori
     return () => {
+      // [REACTIVE] Unsubscribe saat komponen unmount untuk mencegah memory leak
       subData.unsubscribe();
       subLoading.unsubscribe();
       subError.unsubscribe();
