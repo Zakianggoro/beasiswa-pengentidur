@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Search, User, BookOpen, GraduationCap, Calendar, MapPin, Home, NotebookText, Filter, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { supabase } from '../../../database/supabaseClient';
+import { scholarships$, isBeasiswaLoading$, beasiswaError$, loadAllScholarships } from '@/lib/beasiswaService';
 
 interface Beasiswa {
   id: number;
@@ -37,24 +38,27 @@ function CariBeasiswaContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchBeasiswa() {
-      setLoading(true);
-      setError(null);
-      
-      const { data, error } = await supabase
-        .from('Beasiswa')
-        .select('*');
+    // 1. [REACTIVE] Berlangganan (Subscribe) ke data stream dari RxJS Service
+      // UI otomatis update setiap kali scholarships$ emit nilai baru
+    const subData = scholarships$.subscribe(data => setScholarships(data));
 
-      if (error) {
-        console.error('Error fetching data:', error);
-        setError(error.message);
-      } else {
-        setScholarships(data || []);
-      }
-      setLoading(false);
-    }
+     // [REACTIVE] Subscribe ke stream status loading
+    const subLoading = isBeasiswaLoading$.subscribe(status => setLoading(status));
 
-    fetchBeasiswa();
+    // [REACTIVE] Subscribe ke stream pesan error
+    const subError = beasiswaError$.subscribe(msg => setError(msg));
+
+    // 2. Jalankan fungsi untuk memicu penarikan data dari database
+     // Memicu triggerFetch$.next() → menjalankan pipeline reaktif
+    loadAllScholarships();
+
+    // 3. Bersihkan subscription saat komponen unmount agar tidak kebocoran memori
+    return () => {
+      // [REACTIVE] Unsubscribe saat komponen unmount untuk mencegah memory leak
+      subData.unsubscribe();
+      subLoading.unsubscribe();
+      subError.unsubscribe();
+    };
   }, []);
 
   const lokasiOptions = [
@@ -89,16 +93,22 @@ function CariBeasiswaContent() {
   };
 
   const filteredScholarships = scholarships.filter(scholarship => {
-    const matchesSearch = scholarship.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      scholarship.organizer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      scholarship.deskripsi.toLowerCase().includes(searchQuery.toLowerCase());
+  // Amankan setiap properti dengan optional chaining (?.) dan fallback string kosong
+  const nama = scholarship.nama?.toLowerCase() || '';
+  const organizer = scholarship.organizer?.toLowerCase() || '';
+  const deskripsi = scholarship.deskripsi?.toLowerCase() || '';
+  const query = searchQuery.toLowerCase();
 
-    const matchesLokasi = selectedFilters.lokasi.length === 0 || selectedFilters.lokasi.includes(scholarship.lokasi);
-    const matchesTipe = selectedFilters.tipe.length === 0 || selectedFilters.tipe.includes(scholarship.tipe);
-    const matchesTingkat = selectedFilters.tingkat.length === 0 || selectedFilters.tingkat.includes(scholarship.tingkat);
+  const matchesSearch = nama.includes(query) ||
+    organizer.includes(query) ||
+    deskripsi.includes(query);
 
-    return matchesSearch && matchesLokasi && matchesTipe && matchesTingkat;
-  });
+  const matchesLokasi = selectedFilters.lokasi.length === 0 || selectedFilters.lokasi.includes(scholarship.lokasi);
+  const matchesTipe = selectedFilters.tipe.length === 0 || selectedFilters.tipe.includes(scholarship.tipe);
+  const matchesTingkat = selectedFilters.tingkat.length === 0 || selectedFilters.tingkat.includes(scholarship.tingkat);
+
+  return matchesSearch && matchesLokasi && matchesTipe && matchesTingkat;
+});
 
   const getDaysUntilDeadline = (deadline: string) => {
     if (!deadline) return 0;
